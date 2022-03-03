@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>co.edu.udea.ayds2</groupId>
-    <artifactId>ms-admin-traceability</artifactId>
+    <artifactId>ms-admin-stores</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ms-admin-traceability</name>
+    <name>ms-admin-stores</name>
     <description>garage-sale-store-backend</description>
     <properties>
         <java.version>11</java.version>

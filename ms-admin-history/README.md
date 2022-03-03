@@ -4,7 +4,7 @@
 ---
 
 Estudiante: 
-* Juan Camilo Cardona Calderón 
+* Juan Camilo Cardona Calderón
 
 ---
 
