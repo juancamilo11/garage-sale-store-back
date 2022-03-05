@@ -34,7 +34,6 @@ public class UserDto {
     @JsonProperty("registerDate")
     private LocalDate registerDate;
 
-
     @JsonProperty("creationTime")
     private LocalDate creationTime;
 
