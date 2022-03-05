@@ -1,5 +1,6 @@
 package co.edu.udea.ayds2.dto.user;
 
+import co.edu.udea.ayds2.dto.helpers.enums.EnumColombianStates;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,6 @@ public class UserContactDto {
     private String address;
 
     @JsonProperty("colombianState")
-    private EnumColombianStatesDto colombianState;
+    private EnumColombianStates colombianState;
 
 }

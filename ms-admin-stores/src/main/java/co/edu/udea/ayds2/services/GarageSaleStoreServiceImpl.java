@@ -1,6 +1,6 @@
 package co.edu.udea.ayds2.services;
 
-import co.edu.udea.ayds2.dto.helpers.AppServerResponse;
+import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
 import co.edu.udea.ayds2.mapper.GarageSaleStoreMapper;
 import co.edu.udea.ayds2.repository.GarageSaleStoreRepository;

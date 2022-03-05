@@ -1,9 +1,9 @@
-package co.edu.udea.ayds2.dto.user;
+package co.edu.udea.ayds2.dto.helpers.enums;
 
 import lombok.Getter;
 
 @Getter
-public enum EnumColombianStatesDto {
+public enum EnumColombianStates {
     AMAZONAS(1,"Amazonas", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296513/garage-sale-store/assets/user-profile/state-flags/amazonas_fdptc1.png"),
     ANTIOQUIA(2,"Antioquia", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296500/garage-sale-store/assets/user-profile/state-flags/antioquia_kbgxoe.png"),
     ARAUCA(3,"Arauca", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296500/garage-sale-store/assets/user-profile/state-flags/arauca_nfq0zq.png"),
@@ -41,7 +41,7 @@ public enum EnumColombianStatesDto {
     private final String name;
     private final String urlFlag;
 
-    EnumColombianStatesDto(int id, String name, String urlFlag) {
+    EnumColombianStates(int id, String name, String urlFlag) {
         this.id = id;
         this.name = name;
         this.urlFlag = urlFlag;

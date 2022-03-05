@@ -1,7 +1,7 @@
 package co.edu.udea.ayds2.controller;
 
-import co.edu.udea.ayds2.dto.helpers.AppServerResponse;
-import co.edu.udea.ayds2.dto.helpers.EnumResponseStatus;
+import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
+import co.edu.udea.ayds2.dto.helpers.response.EnumResponseStatus;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
 import co.edu.udea.ayds2.monitoring.TraceabilityEmitterImpl;
 import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
@@ -41,6 +41,5 @@ public class GarageSaleStoreController {
                 new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);
 
     }
-
 
 }

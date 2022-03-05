@@ -1,5 +1,6 @@
 package co.edu.udea.ayds2.dto.store.product;
 
+import co.edu.udea.ayds2.dto.helpers.enums.EnumProductStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class ProductDto {
     private Double price;
 
     @JsonProperty("productStatus")
-    private EnumProductStatusDto productStatus;
+    private EnumProductStatus productStatus;
 
     @JsonProperty("additionalDescription")
     private String additionalDescription;

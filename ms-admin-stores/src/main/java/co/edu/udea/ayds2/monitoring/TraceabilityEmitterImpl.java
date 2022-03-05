@@ -1,6 +1,6 @@
 package co.edu.udea.ayds2.monitoring;
 
-import co.edu.udea.ayds2.dto.helpers.AppServerResponse;
+import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
 import com.google.gson.Gson;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -8,11 +8,6 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 
 /**
  * Singleton Patter Implementation

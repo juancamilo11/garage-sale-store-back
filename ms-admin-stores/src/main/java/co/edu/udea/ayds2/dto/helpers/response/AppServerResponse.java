@@ -1,4 +1,4 @@
-package co.edu.udea.ayds2.dto.helpers;
+package co.edu.udea.ayds2.dto.helpers.response;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;

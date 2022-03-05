@@ -1,9 +1,9 @@
-package co.edu.udea.ayds2.dto.store.product;
+package co.edu.udea.ayds2.dto.helpers.enums;
 
 import lombok.Getter;
 
 @Getter
-public enum EnumProductStatusDto {
+public enum EnumProductStatus {
     STATUS_1("Regular"),
     STATUS_2("Bueno"),
     STATUS_3("Muy bueno"),
@@ -12,7 +12,7 @@ public enum EnumProductStatusDto {
 
     private final String statusValue;
 
-    EnumProductStatusDto(String statusValue) {
+    EnumProductStatus(String statusValue) {
         this.statusValue = statusValue;
     }
 

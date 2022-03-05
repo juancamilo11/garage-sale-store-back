@@ -1,4 +1,4 @@
-package co.edu.udea.ayds2.dto.helpers;
+package co.edu.udea.ayds2.dto.helpers.response;
 
 public enum EnumResponseStatus {
     OK("La peitición ha sido llevada a cabo con éxito"),
