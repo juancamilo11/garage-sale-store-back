@@ -1,6 +1,6 @@
 package co.edu.udea.ayds2.dto.store.product;
 
-import co.edu.udea.ayds2.collection.user.User;
+import co.edu.udea.ayds2.dto.user.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.jni.Local;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
@@ -32,9 +31,9 @@ public class ProductQuestionDto {
     private String response;
 
     @JsonProperty("customer")
-    private User customer;
+    private UserDto customer;
 
     @JsonProperty("seller")
-    private User seller;
+    private UserDto seller;
 
 }

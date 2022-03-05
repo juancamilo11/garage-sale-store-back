@@ -1,7 +1,7 @@
 package co.edu.udea.ayds2.dto.store;
 
 import co.edu.udea.ayds2.dto.store.product.ProductDto;
-import co.edu.udea.ayds2.dto.user.User;
+import co.edu.udea.ayds2.dto.user.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -9,8 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,7 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Document
 public class GarageSaleStoreDto {
 
     @Id
@@ -38,15 +38,13 @@ public class GarageSaleStoreDto {
     private StoreVisualDescriptionDto storeVisualDescription;
 
     @JsonProperty("user")
-    private User user;
+    private UserDto seller;
 
-    @JsonProperty("purchaseTestimonialList")
-    private List<PurchaseTestimonialDto> purchaseTestimonialList;
-
-    @JsonProperty("purchaseOrderList")
-    private List<PurchaseOrderDto> purchaseOrderList;
-
-    @JsonProperty("productLis")
+    @JsonProperty("productList")
+    @NotEmpty
     private List<ProductDto> productList;
+
+    private List<PurchaseTestimonialDto> purchaseTestimonialList = new ArrayList<>();
+    private List<PurchaseOrderDto> purchaseOrderList = new ArrayList<>();
 
 }

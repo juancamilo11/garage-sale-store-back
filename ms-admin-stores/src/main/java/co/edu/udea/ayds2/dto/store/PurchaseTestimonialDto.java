@@ -1,6 +1,6 @@
 package co.edu.udea.ayds2.dto.store;
 
-import co.edu.udea.ayds2.dto.user.User;
+import co.edu.udea.ayds2.dto.user.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -12,20 +12,24 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 
 @Data
-@Document
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PurchaseTestimonialDto {
+
     @JsonProperty("title")
     private String title;
+
     @JsonProperty("purchaseTestimonial")
     private String purchaseTestimonial;
+
     @JsonProperty("date")
     private LocalDate date;
+
     @JsonProperty("grade")
-    private int grade;
+    private Integer grade;
+
     @JsonProperty("user")
-    private User user;
+    private UserDto user;
 }

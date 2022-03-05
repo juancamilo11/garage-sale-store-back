@@ -1,5 +1,6 @@
 package co.edu.udea.ayds2.dto.store;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +10,22 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@Document
 @NoArgsConstructor
 public class PurchaseOrderDto {
+
+    @JsonProperty("id")
     private String id;
+
+    @JsonProperty("date")
     private LocalDate date;
+
+    @JsonProperty("purchasedItemList")
     private List<PurchasedItemDto> purchasedItemList;
+
+    @JsonProperty("purchaseTestimonial")
     private PurchaseTestimonialDto purchaseTestimonial;
+
+    @JsonProperty("totalPrice")
     private double totalPrice;
 
     @Builder(toBuilder = true)

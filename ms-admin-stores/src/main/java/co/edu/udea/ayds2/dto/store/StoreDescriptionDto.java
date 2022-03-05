@@ -9,16 +9,19 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Document
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StoreDescriptionDto {
+
     @JsonProperty("slogan")
     private String slogan;
+
     @JsonProperty("description")
     private String[] description;
+
     @JsonProperty("tagsList")
     private String tagsList;
+
 }

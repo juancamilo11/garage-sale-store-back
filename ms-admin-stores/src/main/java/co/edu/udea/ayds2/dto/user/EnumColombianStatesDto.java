@@ -3,7 +3,7 @@ package co.edu.udea.ayds2.dto.user;
 import lombok.Getter;
 
 @Getter
-public enum EnumColombianStates {
+public enum EnumColombianStatesDto {
     AMAZONAS(1,"Amazonas", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296513/garage-sale-store/assets/user-profile/state-flags/amazonas_fdptc1.png"),
     ANTIOQUIA(2,"Antioquia", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296500/garage-sale-store/assets/user-profile/state-flags/antioquia_kbgxoe.png"),
     ARAUCA(3,"Arauca", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296500/garage-sale-store/assets/user-profile/state-flags/arauca_nfq0zq.png"),
@@ -37,11 +37,11 @@ public enum EnumColombianStates {
     VAUPES(31,"Vaupés", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296513/garage-sale-store/assets/user-profile/state-flags/vaupes_fvs67w.png"),
     VICHADA(32,"Vichada", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296513/garage-sale-store/assets/user-profile/state-flags/vichada_rznzo2.png");
 
-    private int id;
-    private String name;
-    private String urlFlag;
+    private final int id;
+    private final String name;
+    private final String urlFlag;
 
-    EnumColombianStates(int id, String name, String urlFlag) {
+    EnumColombianStatesDto(int id, String name, String urlFlag) {
         this.id = id;
         this.name = name;
         this.urlFlag = urlFlag;

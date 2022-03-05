@@ -11,14 +11,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 
 @Data
-@Document
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StoreExistencePeriodDto {
+
     @JsonProperty("startingDate")
     private LocalDate startingDate;
+
     @JsonProperty("endingDate")
     private LocalDate endingDate;
+
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductCategoryDto {
+
     @JsonProperty("name")
     private String name;
 
@@ -21,4 +22,5 @@ public class ProductCategoryDto {
 
     @JsonProperty("productDtoList")
     private List<ProductDto> productList;
+
 }
