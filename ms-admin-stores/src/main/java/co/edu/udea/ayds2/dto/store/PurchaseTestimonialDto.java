@@ -25,6 +25,7 @@ public class PurchaseTestimonialDto {
     private String purchaseTestimonial;
 
     @JsonProperty("date")
+    @DateTimeFormat(style = "yyyy-MM-dd")
     private LocalDate date;
 
     @JsonProperty("grade")

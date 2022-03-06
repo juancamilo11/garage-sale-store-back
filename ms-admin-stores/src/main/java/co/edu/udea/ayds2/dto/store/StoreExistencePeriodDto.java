@@ -18,9 +18,11 @@ import java.time.LocalDate;
 public class StoreExistencePeriodDto {
 
     @JsonProperty("startingDate")
+    @DateTimeFormat(style = "yyyy-MM-dd")
     private LocalDate startingDate;
 
     @JsonProperty("endingDate")
+    @DateTimeFormat(style = "yyyy-MM-dd")
     private LocalDate endingDate;
 
 }

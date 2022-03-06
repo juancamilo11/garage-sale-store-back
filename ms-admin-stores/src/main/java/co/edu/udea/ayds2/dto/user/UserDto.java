@@ -25,19 +25,23 @@ public class UserDto {
     @JsonProperty("photoUrl")
     private String photoUrl;
 
-    @JsonProperty("email")
+    @JsonProperty("occupation")
     private String occupation;
 
     @JsonProperty("dateOfBirth")
+    @DateTimeFormat(style = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
 
     @JsonProperty("registerDate")
+    @DateTimeFormat(style = "yyyy-MM-dd")
     private LocalDate registerDate;
 
     @JsonProperty("creationTime")
+    @DateTimeFormat(style = "yyyy-MM-dd")
     private LocalDate creationTime;
 
     @JsonProperty("lastSignInTime")
+    @DateTimeFormat(style = "yyyy-MM-dd")
     private LocalDate lastSignInTime;
 
     @JsonProperty("userContact")

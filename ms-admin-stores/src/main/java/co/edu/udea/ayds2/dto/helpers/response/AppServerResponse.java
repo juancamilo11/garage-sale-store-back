@@ -17,6 +17,7 @@ public class AppServerResponse {
     @Value("${microservice.name}")
     private String microserviceName;
     private  EnumResponseStatus status;
+    @DateTimeFormat(style = "yyyy-MM-dd")
     private  LocalDate currentDate;
 
 }

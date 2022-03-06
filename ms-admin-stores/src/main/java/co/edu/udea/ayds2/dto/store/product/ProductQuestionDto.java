@@ -19,10 +19,12 @@ import java.time.LocalDate;
 public class ProductQuestionDto {
 
     @JsonProperty("questionDate")
+    @DateTimeFormat(style = "yyyy-MM-dd")
     private LocalDate questionDate;
 
     @JsonProperty("answerDate")
-    private Local answerDate;
+    @DateTimeFormat(style = "yyyy-MM-dd")
+    private LocalDate answerDate;
 
     @JsonProperty("question")
     private String question;

@@ -17,6 +17,7 @@ public class PurchaseOrderDto {
     private String id;
 
     @JsonProperty("date")
+    @DateTimeFormat(style = "yyyy-MM-dd")
     private LocalDate date;
 
     @JsonProperty("purchasedItemList")
