@@ -19,7 +19,7 @@ public class User {
     private String name;
     private String photoUrl;
     private String occupation;
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
     private LocalDate creationTime;
     private LocalDate registerDate;
     private LocalDate lastSignInTime;

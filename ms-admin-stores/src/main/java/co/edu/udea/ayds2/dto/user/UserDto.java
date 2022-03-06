@@ -29,7 +29,7 @@ public class UserDto {
     private String occupation;
 
     @JsonProperty("dateOfBirth")
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @JsonProperty("registerDate")
     private LocalDate registerDate;

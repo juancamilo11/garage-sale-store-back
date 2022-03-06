@@ -2,7 +2,7 @@ package co.edu.udea.ayds2.services;
 
 import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
-import co.edu.udea.ayds2.mapper.GarageSaleStoreMapper;
+import co.edu.udea.ayds2.mapper.StoreMapperFromEntityToDto;
 import co.edu.udea.ayds2.repository.GarageSaleStoreRepository;
 import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
 import lombok.Builder;
@@ -18,17 +18,17 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
     private final GarageSaleStoreService garageSaleStoreService;
 
     @Autowired
-    private final GarageSaleStoreMapper garageSaleStoreMapper;
+    private final StoreMapperFromEntityToDto storeMapperFromEntityToDto;
 
     @Autowired
     private final GarageSaleStoreRepository garageSaleStoreRepository;
 
     @Builder(toBuilder = true)
     public GarageSaleStoreServiceImpl(GarageSaleStoreService garageSaleStoreService,
-                                      GarageSaleStoreMapper garageSaleStoreMapper,
+                                      StoreMapperFromEntityToDto storeMapperFromEntityToDto,
                                       GarageSaleStoreRepository garageSaleStoreRepository) {
         this.garageSaleStoreService = garageSaleStoreService;
-        this.garageSaleStoreMapper = garageSaleStoreMapper;
+        this.storeMapperFromEntityToDto = storeMapperFromEntityToDto;
         this.garageSaleStoreRepository = garageSaleStoreRepository;
     }
 

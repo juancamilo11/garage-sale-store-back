@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class StoreDescription {
 
     private String slogan;
-    private String[] description;
-    private String tagsList;
+    private String description;
+    private String[] tagsList;
 
 }

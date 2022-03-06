@@ -19,9 +19,9 @@ public class StoreDescriptionDto {
     private String slogan;
 
     @JsonProperty("description")
-    private String[] description;
+    private String description;
 
     @JsonProperty("tagsList")
-    private String tagsList;
+    private String[] tagsList;
 
 }
