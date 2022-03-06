@@ -39,12 +39,18 @@ public class GarageSaleStoreDto {
 
     @JsonProperty("user")
     private UserDto seller;
+    
+    @JsonProperty("storeAddress")
+    private StoreAddressDto storeAddressDto;
 
     @JsonProperty("productList")
     @NotEmpty
     private List<ProductDto> productList;
 
-    private List<PurchaseTestimonialDto> purchaseTestimonialList = new ArrayList<>();
-    private List<PurchaseOrderDto> purchaseOrderList = new ArrayList<>();
+    @JsonProperty("purchaseTestimonialList")
+    private List<PurchaseTestimonialDto> purchaseTestimonialList;
+
+    @JsonProperty("purchaseOrderList")
+    private List<PurchaseOrderDto> purchaseOrderList;
 
 }
