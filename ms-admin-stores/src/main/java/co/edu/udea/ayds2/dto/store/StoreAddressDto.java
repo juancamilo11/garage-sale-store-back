@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 public class StoreAddressDto {
 
     @JsonProperty("latitude")
-    private String latitude;
+    private double latitude;
 
     @JsonProperty("longitude")
-    private String longitude;
+    private double longitude;
 
 }

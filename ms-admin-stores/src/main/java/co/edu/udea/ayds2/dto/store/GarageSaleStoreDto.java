@@ -1,5 +1,6 @@
 package co.edu.udea.ayds2.dto.store;
 
+import co.edu.udea.ayds2.dto.store.product.ProductCategoryDto;
 import co.edu.udea.ayds2.dto.store.product.ProductDto;
 import co.edu.udea.ayds2.dto.user.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -42,9 +43,9 @@ public class GarageSaleStoreDto {
     @JsonProperty("storeAddress")
     private StoreAddressDto storeAddressDto;
 
-    @JsonProperty("productList")
+    @JsonProperty("productCategoryList")
     @NotEmpty
-    private List<ProductDto> productList;
+    private List<ProductCategoryDto> productCategoryList;
 
     @JsonProperty("purchaseTestimonialList")
     private List<PurchaseTestimonialDto> purchaseTestimonialList;

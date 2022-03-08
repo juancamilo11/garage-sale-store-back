@@ -18,8 +18,9 @@ import java.util.List;
 @Builder(toBuilder = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductDto {
-    @Id
+
     @NotBlank
+    @JsonProperty("id")
     private String id;
 
     @JsonProperty("productName")
@@ -31,13 +32,13 @@ public class ProductDto {
     @JsonProperty("price")
     private Double price;
 
-    @JsonProperty("productStatus")
+    @JsonProperty("productState")
     private EnumProductStatus productStatus;
 
     @JsonProperty("additionalDescription")
     private String additionalDescription;
 
-    @JsonProperty("productImageUrlList")
+    @JsonProperty("productUrlImages")
     private List<String> productImageUrlList;
 
     @JsonProperty("productTagList")

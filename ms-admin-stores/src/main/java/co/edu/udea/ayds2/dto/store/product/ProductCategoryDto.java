@@ -13,13 +13,13 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductCategoryDto {
 
-    @JsonProperty("name")
+    @JsonProperty("categoryName")
     private String name;
 
     @JsonProperty("imageUrl")
     private String imageUrl;
 
-    @JsonProperty("productDtoList")
+    @JsonProperty("productList")
     private List<ProductDto> productList;
 
 }

@@ -6,6 +6,7 @@ import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
 import co.edu.udea.ayds2.monitoring.TraceabilityEmitter;
 import co.edu.udea.ayds2.monitoring.TraceabilityEmitterImpl;
 import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class GarageSaleStoreController {
 
-    private final GarageSaleStoreService garageSaleStoreService;
     private final TraceabilityEmitter traceabilityEmitter;
-
-    @Autowired
-    public GarageSaleStoreController(GarageSaleStoreService garageSaleStoreService, TraceabilityEmitterImpl traceabilityEmitter) {
-        this.garageSaleStoreService = garageSaleStoreService;
-        this.traceabilityEmitter = traceabilityEmitter;
-    }
+    private final GarageSaleStoreService garageSaleStoreService;
 
     @PostMapping("/post/store")
     public ResponseEntity<String> createStore(@RequestBody GarageSaleStoreDto garageSaleStoreDto) {
