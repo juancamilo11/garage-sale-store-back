@@ -1,6 +1,5 @@
 package co.edu.udea.ayds2.collection.store;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

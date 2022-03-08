@@ -15,19 +15,14 @@ import org.springframework.validation.annotation.Validated;
 public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
 
     @Autowired
-    private final GarageSaleStoreService garageSaleStoreService;
-
-    @Autowired
     private final StoreMapperFromEntityToDto storeMapperFromEntityToDto;
 
     @Autowired
     private final GarageSaleStoreRepository garageSaleStoreRepository;
 
     @Builder(toBuilder = true)
-    public GarageSaleStoreServiceImpl(GarageSaleStoreService garageSaleStoreService,
-                                      StoreMapperFromEntityToDto storeMapperFromEntityToDto,
+    public GarageSaleStoreServiceImpl(StoreMapperFromEntityToDto storeMapperFromEntityToDto,
                                       GarageSaleStoreRepository garageSaleStoreRepository) {
-        this.garageSaleStoreService = garageSaleStoreService;
         this.storeMapperFromEntityToDto = storeMapperFromEntityToDto;
         this.garageSaleStoreRepository = garageSaleStoreRepository;
     }

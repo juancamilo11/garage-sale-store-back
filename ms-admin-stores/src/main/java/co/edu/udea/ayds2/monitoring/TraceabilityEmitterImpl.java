@@ -2,17 +2,23 @@ package co.edu.udea.ayds2.monitoring;
 
 import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
 import com.google.gson.Gson;
+import lombok.NoArgsConstructor;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Singleton Patter Implementation
  * */
 
+@Service
+@Validated
+@NoArgsConstructor
 public class TraceabilityEmitterImpl implements TraceabilityEmitter {
 
     private static TraceabilityEmitterImpl emitter = null;
@@ -28,16 +34,6 @@ public class TraceabilityEmitterImpl implements TraceabilityEmitter {
 
     private final RabbitTemplate rabbitTemplate = new RabbitTemplate();
     private final Gson gson = new Gson();
-
-    private TraceabilityEmitterImpl() {
-    }
-
-    public static TraceabilityEmitterImpl getInstance() {
-        if(TraceabilityEmitterImpl.emitter == null) {
-            emitter = new TraceabilityEmitterImpl();
-        }
-        return TraceabilityEmitterImpl.emitter;
-    }
 
     public Queue queue() {
         return new Queue(TRACEABILITY_QUEUE, true);

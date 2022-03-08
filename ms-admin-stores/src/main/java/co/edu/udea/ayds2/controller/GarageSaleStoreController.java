@@ -3,6 +3,7 @@ package co.edu.udea.ayds2.controller;
 import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
 import co.edu.udea.ayds2.dto.helpers.response.EnumResponseStatus;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
+import co.edu.udea.ayds2.monitoring.TraceabilityEmitter;
 import co.edu.udea.ayds2.monitoring.TraceabilityEmitterImpl;
 import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 public class GarageSaleStoreController {
 
-    @Autowired
     private final GarageSaleStoreService garageSaleStoreService;
+    private final TraceabilityEmitter traceabilityEmitter;
 
     @Autowired
-    private final TraceabilityEmitterImpl traceabilityEmitter;
-
     public GarageSaleStoreController(GarageSaleStoreService garageSaleStoreService, TraceabilityEmitterImpl traceabilityEmitter) {
         this.garageSaleStoreService = garageSaleStoreService;
         this.traceabilityEmitter = traceabilityEmitter;
@@ -39,7 +38,8 @@ public class GarageSaleStoreController {
         return response.getStatus().equals(EnumResponseStatus.OK) ?
                 new ResponseEntity<>("Success", HttpStatus.OK) :
                 new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);
-
     }
+
+
 
 }
