@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class StoreAddress {
 
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
 
 }

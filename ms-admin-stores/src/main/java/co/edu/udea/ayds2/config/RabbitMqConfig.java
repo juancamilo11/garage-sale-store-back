@@ -47,14 +47,3 @@ public class RabbitMqConfig {
         return RabbitMqConfig.ROUTING_KEY;
     }
 }
-
-/*
-*
-
-
-*
-*
-*
-*
-*
-* */

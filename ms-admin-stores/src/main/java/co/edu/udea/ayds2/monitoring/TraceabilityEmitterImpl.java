@@ -25,7 +25,6 @@ public class TraceabilityEmitterImpl implements TraceabilityEmitter {
 
     @Override
     public void emitTraceability(AppServerResponse appServerResponse) {
-
         this.rabbitTemplate
                 .convertAndSend(RabbitMqConfig.getExchange(), RabbitMqConfig.getRoutingKey(), gson.toJson(appServerResponse));
     }
