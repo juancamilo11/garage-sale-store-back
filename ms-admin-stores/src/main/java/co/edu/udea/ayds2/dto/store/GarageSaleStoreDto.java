@@ -1,7 +1,6 @@
 package co.edu.udea.ayds2.dto.store;
 
 import co.edu.udea.ayds2.dto.store.product.ProductCategoryDto;
-import co.edu.udea.ayds2.dto.store.product.ProductDto;
 import co.edu.udea.ayds2.dto.user.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

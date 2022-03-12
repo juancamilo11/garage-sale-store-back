@@ -13,6 +13,7 @@ import co.edu.udea.ayds2.dto.user.UserDto;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromDtoToEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -20,41 +21,84 @@ import java.util.stream.Collectors;
 @Component
 public class StoreMapperFromDtoToEntityImpl implements StoreMapperFromDtoToEntity {
 
+    @Override
     public Function<GarageSaleStoreDto, GarageSaleStore> mapFromDtoToEntity() {
-        return (GarageSaleStoreDto garageSaleStoreDto) -> GarageSaleStore.builder()
-                .id(garageSaleStoreDto.getId())
-                .storeName(garageSaleStoreDto.getStoreName())
-                .storeExistencePeriod(mapStoreExistencePeriod(garageSaleStoreDto.getStoreExistencePeriod()))
-                .storeDescription(mapStoreDescription(garageSaleStoreDto.getStoreDescription()))
-                .storeVisualDescription(mapStoreVisualDescription(garageSaleStoreDto.getStoreVisualDescription()))
-                .seller(mapSellerInformation(garageSaleStoreDto.getSeller()))
-                .productCategoryList(mapProductCategoryList(garageSaleStoreDto.getProductCategoryList()))
-                .purchaseTestimonialList(mapPurchaseTestimonialList(garageSaleStoreDto.getPurchaseTestimonialList()))
-                .purchaseOrderList(mapPurchaseOrderList(garageSaleStoreDto.getPurchaseOrderList()))
+        return (garageSaleStore) -> GarageSaleStore.builder()
+                .id(garageSaleStore.getId())
+                .storeName(garageSaleStore.getStoreName())
+                .storeExistencePeriod(mapStoreExistencePeriod(garageSaleStore.getStoreExistencePeriod()))
+                .storeDescription(mapStoreDescription(garageSaleStore.getStoreDescription()))
+                .storeVisualDescription(mapStoreVisualDescription(garageSaleStore.getStoreVisualDescription()))
+                .seller(mapSellerInformation(garageSaleStore.getSeller()))
+                .productCategoryList(mapProductCategoryList(garageSaleStore.getProductCategoryList()))
+                .purchaseTestimonialList(mapPurchaseTestimonialList(garageSaleStore.getPurchaseTestimonialList()))
+                .purchaseOrderList(mapPurchaseOrderList(garageSaleStore.getPurchaseOrderList()))
                 .build();
     }
 
-    private StoreExistencePeriod mapStoreExistencePeriod(StoreExistencePeriodDto storeExistencePeriodDto) {
-        return StoreExistencePeriod.builder()
-                .startingDate(storeExistencePeriodDto.getStartingDate())
-                .endingDate(storeExistencePeriodDto.getEndingDate())
+    private List<PurchaseOrder> mapPurchaseOrderList(List<PurchaseOrderDto> purchaseOrderDtoList) {
+        return purchaseOrderDtoList
+                .stream()
+                .map(purchaseOrderDto -> PurchaseOrder.builder()
+                        .id(purchaseOrderDto.getId())
+                        .date(purchaseOrderDto.getDate())
+                        .purchaseTestimonial(mapPurchaseTestimonial(purchaseOrderDto.getPurchaseTestimonial()))
+                        .purchasedItemList(mapPurchasedItemsList(purchaseOrderDto.getPurchasedItemList()))
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    private PurchaseTestimonial mapPurchaseTestimonial(PurchaseTestimonialDto purchaseTestimonialDto) {
+        return PurchaseTestimonial.builder()
+                .title(purchaseTestimonialDto.getTitle())
+                .purchaseTestimonial(purchaseTestimonialDto.getPurchaseTestimonial())
+                .date(purchaseTestimonialDto.getDate())
+                .grade(purchaseTestimonialDto.getGrade())
+                .user(mapSellerInformation(purchaseTestimonialDto.getUser()))
                 .build();
     }
 
-    private StoreDescription mapStoreDescription(StoreDescriptionDto storeDescriptionDto) {
-        return StoreDescription.builder()
-                .description(storeDescriptionDto.getDescription())
-                .slogan(storeDescriptionDto.getSlogan())
-                .tagsList(storeDescriptionDto.getTagsList())
-                .build();
+    private List<PurchasedItem> mapPurchasedItemsList(List<PurchasedItemDto> purchasedItemDtoList) {
+        return purchasedItemDtoList.stream()
+                .map(purchasedItemDto -> PurchasedItem.builder()
+                        .price(purchasedItemDto.getPrice())
+                        .quantity(purchasedItemDto.getQuantity())
+                        .product(mapProductList(Collections.singletonList(purchasedItemDto.getProduct())).get(0))
+                        .build()).collect(Collectors.toList());
     }
 
-    private StoreVisualDescription mapStoreVisualDescription(StoreVisualDescriptionDto storeVisualDescriptionDto) {
-        return StoreVisualDescription.builder()
-                .portraitUrl(storeVisualDescriptionDto.getPortraitUrl())
-                .prevImagesList(storeVisualDescriptionDto.getPrevImagesList())
-                .physicalStoreImageUrl(storeVisualDescriptionDto.getPhysicalStoreImageUrl())
-                .build();
+    private List<PurchaseTestimonial> mapPurchaseTestimonialList(List<PurchaseTestimonialDto> purchaseTestimonialDtoList) {
+        return purchaseTestimonialDtoList.stream()
+                .map(purchaseTestimonialDto -> PurchaseTestimonial.builder()
+                        .title(purchaseTestimonialDto.getTitle())
+                        .date(purchaseTestimonialDto.getDate())
+                        .grade(purchaseTestimonialDto.getGrade())
+                        .user(mapSellerInformation(purchaseTestimonialDto.getUser()))
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    private List<ProductCategory> mapProductCategoryList(List<ProductCategoryDto> productCategoryDtoList) {
+        return productCategoryDtoList.stream()
+                .map(productCategory -> ProductCategory.builder()
+                        .name(productCategory.getName())
+                        .imageUrl(productCategory.getImageUrl())
+                        .productList(mapProductList(productCategory.getProductList()))
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    private List<Product> mapProductList(List<ProductDto> productDtoList) {
+        return productDtoList.stream().map(product -> Product.builder()
+                        .id(product.getId())
+                        .productName(product.getProductName())
+                        .quantity(product.getQuantity())
+                        .price(product.getPrice())
+                        .productStatus(product.getProductStatus())
+                        .additionalDescription(product.getAdditionalDescription())
+                        .productImageUrlList(product.getProductImageUrlList())
+                        .productTagList(product.getProductTagList()).build())
+                .collect(Collectors.toList());
     }
 
     private User mapSellerInformation(UserDto userDto) {
@@ -71,39 +115,6 @@ public class StoreMapperFromDtoToEntityImpl implements StoreMapperFromDtoToEntit
                 .build();
     }
 
-    private List<ProductCategory> mapProductCategoryList(List<ProductCategoryDto> productCategoryDtoList) {
-        return productCategoryDtoList.stream()
-                .map(productCategoryDto -> ProductCategory.builder()
-                        .name(productCategoryDto.getName())
-                        .imageUrl(productCategoryDto.getImageUrl())
-                        .productList(productCategoryDto.getProductList()
-                                .stream()
-                                .map(productDto ->  mapProductList().apply(productDto))
-                                .collect(Collectors.toList()))
-                .build()).collect(Collectors.toList());
-    }
-
-    private Function<ProductDto, Product> mapProductList() {
-        return (ProductDto productDto) -> Product.builder()
-                    .id(productDto.getId())
-                    .productName(productDto.getProductName())
-                    .quantity(productDto.getQuantity())
-                    .price(productDto.getPrice())
-                    .productStatus(productDto.getProductStatus())
-                    .additionalDescription(productDto.getAdditionalDescription())
-                    .productImageUrlList(productDto.getProductImageUrlList())
-                    .productTagList(productDto.getProductTagList())
-                    .build();
-    }
-
-    private List<PurchaseTestimonial> mapPurchaseTestimonialList(List<PurchaseTestimonialDto> purchaseTestimonialDtoList) {
-        return purchaseTestimonialDtoList.stream().map(purchaseTestimonial -> PurchaseTestimonial.builder().build()).collect(Collectors.toList());
-    }
-
-    private List<PurchaseOrder> mapPurchaseOrderList(List<PurchaseOrderDto> purchaseOrderDtoList) {
-        return purchaseOrderDtoList.stream().map(purchaseOrder -> PurchaseOrder.builder().build()).collect(Collectors.toList());
-    }
-
     private UserContact mapUserContact(UserContactDto userContactDto) {
         return UserContact.builder()
                 .email(userContactDto.getEmail())
@@ -111,6 +122,29 @@ public class StoreMapperFromDtoToEntityImpl implements StoreMapperFromDtoToEntit
                 .colombianState(userContactDto.getColombianState())
                 .phoneNumber(userContactDto.getPhoneNumber())
                 .postalCode(userContactDto.getPostalCode())
+                .build();
+    }
+
+    private StoreVisualDescription mapStoreVisualDescription(StoreVisualDescriptionDto storeVisualDescriptionDto) {
+        return StoreVisualDescription.builder()
+                .portraitUrl(storeVisualDescriptionDto.getPortraitUrl())
+                .prevImagesList(storeVisualDescriptionDto.getPrevImagesList())
+                .physicalStoreImageUrl(storeVisualDescriptionDto.getPhysicalStoreImageUrl())
+                .build();
+    }
+
+    private StoreDescription mapStoreDescription(StoreDescriptionDto storeDescriptionDto) {
+        return StoreDescription.builder()
+                .description(storeDescriptionDto.getDescription())
+                .slogan(storeDescriptionDto.getSlogan())
+                .tagsList(storeDescriptionDto.getTagsList())
+                .build();
+    }
+
+    private StoreExistencePeriod mapStoreExistencePeriod(StoreExistencePeriodDto storeExistencePeriodDto) {
+        return StoreExistencePeriod.builder()
+                .startingDate(storeExistencePeriodDto.getStartingDate())
+                .endingDate(storeExistencePeriodDto.getEndingDate())
                 .build();
     }
 

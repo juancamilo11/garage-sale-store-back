@@ -4,13 +4,12 @@ import co.edu.udea.ayds2.collection.store.GarageSaleStore;
 import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
 import co.edu.udea.ayds2.dto.helpers.response.EnumResponseStatus;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
-import co.edu.udea.ayds2.mapper.StoreMapperFromEntityToDtoImpl;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromDtoToEntity;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromEntityToDto;
 import co.edu.udea.ayds2.repository.GarageSaleStoreRepository;
 import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.catalina.Store;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -31,7 +30,7 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
 
     @Override
     public AppServerResponse createStore(GarageSaleStoreDto garageSaleStoreDto) {
-        GarageSaleStore result = this.garageSaleStoreRepository.save(this.storeMapperFromDtoToEntity.mapFromDtoToEntity().apply(garageSaleStoreDto));
+        GarageSaleStore result = this.garageSaleStoreRepository.save(this.storeMapperFromDtoToEntity.mapFromDtoToEntity(garageSaleStoreDto));
         return AppServerResponse.builder()
                 .currentDate(LocalDate.now())
                 .microserviceName("ms-admin-stores")

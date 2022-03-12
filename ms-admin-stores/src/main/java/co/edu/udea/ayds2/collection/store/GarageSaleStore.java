@@ -1,10 +1,7 @@
 package co.edu.udea.ayds2.collection.store;
 
-import co.edu.udea.ayds2.collection.store.product.Product;
 import co.edu.udea.ayds2.collection.store.product.ProductCategory;
 import co.edu.udea.ayds2.collection.user.User;
-import co.edu.udea.ayds2.dto.store.StoreAddressDto;
-import co.edu.udea.ayds2.dto.store.product.ProductCategoryDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
