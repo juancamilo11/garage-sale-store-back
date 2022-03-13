@@ -97,8 +97,10 @@ public class StoreMapperFromDtoToEntityImpl implements StoreMapperFromDtoToEntit
                         .productStatus(product.getProductStatus())
                         .additionalDescription(product.getAdditionalDescription())
                         .productImageUrlList(product.getProductImageUrlList())
-                        .productTagList(product.getProductTagList()).build())
+                        .productTagList(product.getProductTagList())
+                        .build())
                 .collect(Collectors.toList());
+
     }
 
     private User mapSellerInformation(UserDto userDto) {

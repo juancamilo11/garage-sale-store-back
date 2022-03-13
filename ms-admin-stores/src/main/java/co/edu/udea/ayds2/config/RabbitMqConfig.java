@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 
-    private static String TRACEABILITY_QUEUE = "monitoring.traceability.queue";
+    public static String TRACEABILITY_QUEUE = "monitoring.traceability.queue";
 
-    private static String EXCHANGE = "monitoring.traceability.exchange";
+    public static String EXCHANGE = "monitoring.traceability.exchange";
 
-    private static String ROUTING_KEY = "monitoring.traceability.routingKey";
+    public static String ROUTING_KEY = "monitoring.traceability.routingKey";
 
     @Bean
     public Queue queue() {
@@ -34,15 +34,4 @@ public class RabbitMqConfig {
                 .with(ROUTING_KEY);
     }
 
-    public static String getTraceabilityQueue() {
-        return RabbitMqConfig.TRACEABILITY_QUEUE;
-    }
-
-    public static String getExchange() {
-        return RabbitMqConfig.EXCHANGE;
-    }
-
-    public static String getRoutingKey() {
-        return RabbitMqConfig.ROUTING_KEY;
-    }
 }

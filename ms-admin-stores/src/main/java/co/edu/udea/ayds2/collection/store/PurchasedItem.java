@@ -1,7 +1,9 @@
 package co.edu.udea.ayds2.collection.store;
 
 import co.edu.udea.ayds2.collection.store.product.Product;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
