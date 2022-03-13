@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Validated
@@ -21,19 +24,26 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
 
     private final StoreMapperFromEntityToDto storeMapperFromEntityToDto;
     private final StoreMapperFromDtoToEntity storeMapperFromDtoToEntity;
-
     private final GarageSaleStoreRepository garageSaleStoreRepository;
 
-////    @Value("${microservice.name}")
-//    private final String microserviceName = "ms-admin-stores";
+    @Override
+    public boolean createStore(GarageSaleStoreDto garageSaleStoreDto) {
+        GarageSaleStore result = this.garageSaleStoreRepository.save(this.storeMapperFromDtoToEntity.mapFromDtoToEntity().apply(garageSaleStoreDto));
+        return result.getId().equals(garageSaleStoreDto.getId());
+    }
 
     @Override
-    public AppServerResponse createStore(GarageSaleStoreDto garageSaleStoreDto) {
-        GarageSaleStore result = this.garageSaleStoreRepository.save(this.storeMapperFromDtoToEntity.mapFromDtoToEntity().apply(garageSaleStoreDto));
-        return AppServerResponse.builder()
-                .currentDate(LocalDate.now())
-                .microserviceName("ms-admin-stores")
-                .status(result != null ? EnumResponseStatus.OK : EnumResponseStatus.ERROR)
-                .build();
+    public List<GarageSaleStore> getAllActiveStores() {
+
+        return this.garageSaleStoreRepository.findAll()
+                .stream()
+                .filter(garageSaleStore -> garageSaleStore.getStoreExistencePeriod()
+                        .getStartingDate()
+                        .isBefore(LocalDate.now()) &&
+                        garageSaleStore.getStoreExistencePeriod()
+                                .getEndingDate()
+                                .isAfter(LocalDate.now())
+                        )
+                .collect(Collectors.toList());
     }
 }
