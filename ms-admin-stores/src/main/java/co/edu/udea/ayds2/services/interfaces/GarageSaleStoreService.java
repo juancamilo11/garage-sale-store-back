@@ -13,4 +13,5 @@ public interface GarageSaleStoreService {
     List<GarageSaleStore> getAllActiveStores();
 
     boolean postNewQuestion(String storeId, String categoryName, String productId, ProductQuestionDto productQuestionDto);
+    boolean postAnswerToProductQuestion(String storeId, String categoryName, String productId, ProductQuestionDto productQuestionDto);
 }

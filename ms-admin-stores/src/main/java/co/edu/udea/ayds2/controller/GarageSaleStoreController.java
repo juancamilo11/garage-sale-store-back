@@ -53,12 +53,27 @@ public class GarageSaleStoreController {
     }
 
     @PostMapping("/post/question/{storeId}/{categoryName}/{productId}")
-    public ResponseEntity<String> getAllActiveStores(@PathVariable String storeId,
+    public ResponseEntity<String> postNewQuestionToProduct(@PathVariable String storeId,
                                                      @PathVariable String categoryName,
                                                      @PathVariable String productId,
                                                      @RequestBody ProductQuestionDto productQuestionDto) {
 
         boolean result = this.garageSaleStoreService.postNewQuestion(storeId, categoryName, productId, productQuestionDto);
+
+//        emitAppServiceResponse(result ? EnumResponseStatus.OK : EnumResponseStatus.ERROR,
+//                result ? "[GET - Success] Post new Question, value: " + productQuestionDto.getQuestion():
+//                        "[GET - Error] All GarageSaleStores");
+
+        return getResponseEntity(result,"Success", "Error");
+    }
+
+    @PostMapping("/post/answer/{storeId}/{categoryName}/{productId}")
+    public ResponseEntity<String> postAnswerToProductQuestion(@PathVariable String storeId,
+                                                           @PathVariable String categoryName,
+                                                           @PathVariable String productId,
+                                                           @RequestBody ProductQuestionDto productQuestionDto) {
+
+        boolean result = this.garageSaleStoreService.postAnswerToProductQuestion(storeId, categoryName, productId, productQuestionDto);
 
 //        emitAppServiceResponse(result ? EnumResponseStatus.OK : EnumResponseStatus.ERROR,
 //                result ? "[GET - Success] Post new Question, value: " + productQuestionDto.getQuestion():

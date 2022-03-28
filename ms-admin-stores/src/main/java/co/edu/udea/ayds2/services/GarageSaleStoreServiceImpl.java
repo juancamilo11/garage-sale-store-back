@@ -68,6 +68,20 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
         }).orElse(Boolean.FALSE);
     }
 
+    @Override
+    public boolean postAnswerToProductQuestion(String storeId, String categoryName, String productId, ProductQuestionDto productQuestionDto) {
+        Optional<GarageSaleStore> garageSaleStoreOptional = this.garageSaleStoreRepository.findById(storeId);
+        return garageSaleStoreOptional.map(garageSaleStore -> {
+            List<ProductCategory> productCategoryList = garageSaleStore.getProductCategoryList()
+                    .stream()
+                    .map(getProductCategoryToUpdate(categoryName, productId, productQuestionDto)).collect(Collectors.toList());
+
+            garageSaleStore.setProductCategoryList(productCategoryList);
+            this.garageSaleStoreRepository.save(garageSaleStore);
+            return Boolean.TRUE;
+        }).orElse(Boolean.FALSE);
+    }
+
     private Function<ProductCategory, ProductCategory> getProductCategoryToUpdate(String categoryName, String productId, ProductQuestionDto productQuestionDto) {
         return productCategory -> {
             if (productCategory.getName().equalsIgnoreCase(categoryName)) {
@@ -91,14 +105,36 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
                 if(productQuestionList == null) {
                     productQuestionList = new ArrayList<>();
                 }
-                productQuestionList.add(this.storeMapperFromDtoToEntity
-                        .mapProductQuestionFromDtoToEntity()
-                        .apply(productQuestionDto));
-
+                if(productQuestionList.stream().anyMatch(productQuestion -> productQuestion.getId().equalsIgnoreCase(productQuestionDto.getId()))) {
+                    productQuestionList = addAnswerToExistingQuestion(productQuestionDto, productQuestionList);
+                } else {
+                    addQuestionToProduct(productQuestionDto, productQuestionList);
+                }
                 product.setProductQuestionList(productQuestionList);
                 return product;
             }
             return product;
         };
+    }
+
+    private void addQuestionToProduct(ProductQuestionDto productQuestionDto, List<ProductQuestion> productQuestionList) {
+        productQuestionList.add(this.storeMapperFromDtoToEntity
+                .mapProductQuestionFromDtoToEntity()
+                .apply(productQuestionDto));
+    }
+
+    private List<ProductQuestion> addAnswerToExistingQuestion(ProductQuestionDto productQuestionDto, List<ProductQuestion> productQuestionList) {
+        productQuestionList = productQuestionList
+                .stream()
+                .map(productQuestion -> {
+                    if(productQuestion.getId().equalsIgnoreCase(productQuestionDto.getId())) {
+                        productQuestion.setResponse(productQuestionDto.getResponse());
+                        productQuestion.setAnswerDate(productQuestionDto.getAnswerDate());
+
+                        return productQuestion;
+                    }
+                    return productQuestion;
+                }).collect(Collectors.toList());
+        return productQuestionList;
     }
 }
