@@ -4,6 +4,7 @@ import co.edu.udea.ayds2.collection.store.GarageSaleStore;
 import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
 import co.edu.udea.ayds2.dto.helpers.response.EnumResponseStatus;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
+import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
 import co.edu.udea.ayds2.monitoring.TraceabilityEmitter;
 import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000/")
 public class GarageSaleStoreController {
 
     private final TraceabilityEmitter traceabilityEmitter;
@@ -26,8 +28,6 @@ public class GarageSaleStoreController {
 
     @PostMapping("/post/store")
     public ResponseEntity<String> createStore(@RequestBody GarageSaleStoreDto garageSaleStoreDto) {
-
-        //toDo --> Implement save store, then send the traceability
 
         boolean response = this.garageSaleStoreService.createStore(garageSaleStoreDto);
 
@@ -50,6 +50,21 @@ public class GarageSaleStoreController {
 
         return getResponseEntity(response,garageSaleStoreList, Collections.emptyList());
 
+    }
+
+    @PostMapping("/post/question/{storeId}/{categoryName}/{productId}")
+    public ResponseEntity<String> getAllActiveStores(@PathVariable String storeId,
+                                                     @PathVariable String categoryName,
+                                                     @PathVariable String productId,
+                                                     @RequestBody ProductQuestionDto productQuestionDto) {
+
+        boolean result = this.garageSaleStoreService.postNewQuestion(storeId, categoryName, productId, productQuestionDto);
+
+//        emitAppServiceResponse(result ? EnumResponseStatus.OK : EnumResponseStatus.ERROR,
+//                result ? "[GET - Success] Post new Question, value: " + productQuestionDto.getQuestion():
+//                        "[GET - Error] All GarageSaleStores");
+
+        return getResponseEntity(result,"Success", "Error");
     }
 
     private void emitAppServiceResponse(EnumResponseStatus responseStatus, String additionalInfo) {

@@ -1,11 +1,9 @@
 package co.edu.udea.ayds2.collection.store.product;
 
-import co.edu.udea.ayds2.collection.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDate;
 
@@ -15,11 +13,11 @@ import java.time.LocalDate;
 @Builder(toBuilder = true)
 public class ProductQuestion {
 
+    private String id;
     private LocalDate questionDate;
-    private Local answerDate;
+    private LocalDate answerDate;
     private String question;
     private String response;
-    private User customer;
-    private User seller;
+    private String customerId;
 
 }

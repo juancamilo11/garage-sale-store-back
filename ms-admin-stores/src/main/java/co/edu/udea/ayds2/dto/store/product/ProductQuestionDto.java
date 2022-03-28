@@ -18,6 +18,9 @@ import java.time.LocalDate;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductQuestionDto {
 
+    @JsonProperty("questionId")
+    private String id;
+
     @JsonProperty("questionDate")
     @DateTimeFormat(style = "yyyy-MM-dd")
     private LocalDate questionDate;
@@ -32,10 +35,6 @@ public class ProductQuestionDto {
     @JsonProperty("response")
     private String response;
 
-    @JsonProperty("customer")
-    private UserDto customer;
-
-    @JsonProperty("seller")
-    private UserDto seller;
-
+    @JsonProperty("customerId")
+    private String customerId;
 }

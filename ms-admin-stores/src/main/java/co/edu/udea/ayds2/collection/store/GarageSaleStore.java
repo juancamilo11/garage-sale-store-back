@@ -25,7 +25,7 @@ public class GarageSaleStore {
     private StoreExistencePeriod storeExistencePeriod;
     private StoreDescription storeDescription;
     private StoreVisualDescription storeVisualDescription;
-    private User seller;
+    private String sellerId;
     private StoreAddress storeAddress;
     private List<ProductCategory> productCategoryList;
     private List<PurchaseTestimonial> purchaseTestimonialList = new ArrayList<>();

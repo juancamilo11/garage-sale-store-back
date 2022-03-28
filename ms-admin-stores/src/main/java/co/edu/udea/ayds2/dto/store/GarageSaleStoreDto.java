@@ -37,7 +37,7 @@ public class GarageSaleStoreDto {
     private StoreVisualDescriptionDto storeVisualDescription;
 
     @JsonProperty("user")
-    private UserDto seller;
+    private String sellerId;
     
     @JsonProperty("storeAddress")
     private StoreAddressDto storeAddressDto;

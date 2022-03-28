@@ -42,4 +42,7 @@ public class ProductDto {
 
     @JsonProperty("productTagList")
     private List<String> productTagList;
+
+    @JsonProperty("productQuestionList")
+    private List<ProductQuestionDto> productQuestionList;
 }

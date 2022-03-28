@@ -26,5 +26,5 @@ public class Product {
     private EnumProductStatus productStatus;
     private List<String> productImageUrlList;
     private List<String> productTagList;
-
+    private List<ProductQuestion> productQuestionList;
 }

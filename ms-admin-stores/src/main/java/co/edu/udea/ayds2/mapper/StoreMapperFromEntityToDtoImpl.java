@@ -3,11 +3,13 @@ package co.edu.udea.ayds2.mapper;
 import co.edu.udea.ayds2.collection.store.*;
 import co.edu.udea.ayds2.collection.store.product.Product;
 import co.edu.udea.ayds2.collection.store.product.ProductCategory;
+import co.edu.udea.ayds2.collection.store.product.ProductQuestion;
 import co.edu.udea.ayds2.collection.user.User;
 import co.edu.udea.ayds2.collection.user.UserContact;
 import co.edu.udea.ayds2.dto.store.*;
 import co.edu.udea.ayds2.dto.store.product.ProductCategoryDto;
 import co.edu.udea.ayds2.dto.store.product.ProductDto;
+import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
 import co.edu.udea.ayds2.dto.user.UserContactDto;
 import co.edu.udea.ayds2.dto.user.UserDto;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromEntityToDto;
@@ -29,7 +31,7 @@ public class StoreMapperFromEntityToDtoImpl implements StoreMapperFromEntityToDt
                 .storeExistencePeriod(mapStoreExistencePeriod(garageSaleStore.getStoreExistencePeriod()))
                 .storeDescription(mapStoreDescription(garageSaleStore.getStoreDescription()))
                 .storeVisualDescription(mapStoreVisualDescription(garageSaleStore.getStoreVisualDescription()))
-                .seller(mapSellerInformation(garageSaleStore.getSeller()))
+                .sellerId(garageSaleStore.getSellerId())
                 .productCategoryList(mapProductCategoryList(garageSaleStore.getProductCategoryList()))
                 .purchaseTestimonialList(mapPurchaseTestimonialList(garageSaleStore.getPurchaseTestimonialList()))
                 .purchaseOrderList(mapPurchaseOrderList(garageSaleStore.getPurchaseOrderList()))
@@ -97,8 +99,20 @@ public class StoreMapperFromEntityToDtoImpl implements StoreMapperFromEntityToDt
                 .productStatus(product.getProductStatus())
                 .additionalDescription(product.getAdditionalDescription())
                 .productImageUrlList(product.getProductImageUrlList())
+                 .productQuestionList(mapProductQuestionList(product.getProductQuestionList()))
                 .productTagList(product.getProductTagList()).build())
                 .collect(Collectors.toList());
+    }
+
+    private List<ProductQuestionDto> mapProductQuestionList(List<ProductQuestion> productQuestionList) {
+        return productQuestionList.stream().map(productQuestion -> ProductQuestionDto.builder()
+                .id(productQuestion.getId())
+                .questionDate(productQuestion.getQuestionDate())
+                .answerDate(productQuestion.getAnswerDate())
+                .question(productQuestion.getQuestion())
+                .response(productQuestion.getResponse())
+                .customerId(productQuestion.getCustomerId())
+                .build()).collect(Collectors.toList());
     }
 
     private UserDto mapSellerInformation(User user) {
