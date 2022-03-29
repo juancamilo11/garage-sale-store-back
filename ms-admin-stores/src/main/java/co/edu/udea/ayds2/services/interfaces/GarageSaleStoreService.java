@@ -14,4 +14,8 @@ public interface GarageSaleStoreService {
 
     boolean postNewQuestion(String storeId, String categoryName, String productId, ProductQuestionDto productQuestionDto);
     boolean postAnswerToProductQuestion(String storeId, String categoryName, String productId, ProductQuestionDto productQuestionDto);
+
+    List<GarageSaleStore> getAllActiveStoresBySellerId(String sellerId);
+
+    boolean postStoreView(String storeId, String userId);
 }

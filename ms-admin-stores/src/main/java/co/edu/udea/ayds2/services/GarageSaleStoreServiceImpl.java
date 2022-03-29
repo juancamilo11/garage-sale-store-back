@@ -1,16 +1,17 @@
 package co.edu.udea.ayds2.services;
 
 import co.edu.udea.ayds2.collection.store.GarageSaleStore;
+import co.edu.udea.ayds2.collection.store.StoreVisualization;
 import co.edu.udea.ayds2.collection.store.product.Product;
 import co.edu.udea.ayds2.collection.store.product.ProductCategory;
 import co.edu.udea.ayds2.collection.store.product.ProductQuestion;
-import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
-import co.edu.udea.ayds2.dto.helpers.response.EnumResponseStatus;
+import co.edu.udea.ayds2.collection.user.UserVisualization;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
 import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromDtoToEntity;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromEntityToDto;
 import co.edu.udea.ayds2.repository.GarageSaleStoreRepository;
+import co.edu.udea.ayds2.repository.StoreVisualizationRepository;
 import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -32,6 +33,7 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
     private final StoreMapperFromEntityToDto storeMapperFromEntityToDto;
     private final StoreMapperFromDtoToEntity storeMapperFromDtoToEntity;
     private final GarageSaleStoreRepository garageSaleStoreRepository;
+    private final StoreVisualizationRepository storeVisualizationRepository;
 
     @Override
     public boolean createStore(GarageSaleStoreDto garageSaleStoreDto) {
@@ -41,16 +43,56 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
 
     @Override
     public List<GarageSaleStore> getAllActiveStores() {
+        return filterActiveGarageSalesStores(this.garageSaleStoreRepository.findAll());
+    }
 
-        return this.garageSaleStoreRepository.findAll()
-                .stream()
+    @Override
+    public List<GarageSaleStore> getAllActiveStoresBySellerId(String sellerId) {
+        return filterActiveGarageSalesStores(this.garageSaleStoreRepository.findAllBySellerId(sellerId));
+    }
+
+    @Override
+    public boolean postStoreView(String storeId, String userId) {
+        Optional<StoreVisualization> storeVisualizationOptional = this.storeVisualizationRepository.findById(storeId);
+        return storeVisualizationOptional.map(storeVisualization -> {
+            boolean userAlreadySawStore = storeVisualization.getUserVisualizationList()
+                    .stream()
+                    .anyMatch(userVisualization -> userVisualization.getUserId().equalsIgnoreCase(userId));
+            if(!userAlreadySawStore) {
+                addTheNewUserVisualization(userId, storeVisualization);
+            }
+            return Boolean.TRUE;
+        }).or(() -> {
+            this.storeVisualizationRepository.save(StoreVisualization.builder()
+                    .storeId(storeId)
+                    .userVisualizationList(Collections.singletonList(UserVisualization.builder()
+                            .userId(userId)
+                            .date(LocalDate.now())
+                            .build()))
+                    .build());
+            return Optional.of(Boolean.TRUE);
+        }).orElse(Boolean.FALSE);
+    }
+
+    private void addTheNewUserVisualization(String userId, StoreVisualization storeVisualization) {
+        List<UserVisualization> newUserVisualizationList = storeVisualization.getUserVisualizationList();
+        newUserVisualizationList.add(UserVisualization.builder()
+                        .userId(userId)
+                        .date(LocalDate.now())
+                .build());
+        storeVisualization.setUserVisualizationList(newUserVisualizationList);
+        this.storeVisualizationRepository.save(storeVisualization);
+    }
+
+    private List<GarageSaleStore> filterActiveGarageSalesStores(List<GarageSaleStore> garageSaleStores) {
+        return garageSaleStores.stream()
                 .filter(garageSaleStore -> garageSaleStore.getStoreExistencePeriod()
                         .getStartingDate()
                         .isBefore(LocalDate.now()) &&
                         garageSaleStore.getStoreExistencePeriod()
                                 .getEndingDate()
                                 .isAfter(LocalDate.now())
-                        )
+                )
                 .collect(Collectors.toList());
     }
 
@@ -81,6 +123,7 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
             return Boolean.TRUE;
         }).orElse(Boolean.FALSE);
     }
+
 
     private Function<ProductCategory, ProductCategory> getProductCategoryToUpdate(String categoryName, String productId, ProductQuestionDto productQuestionDto) {
         return productCategory -> {

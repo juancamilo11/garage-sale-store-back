@@ -1,12 +1,24 @@
-package co.edu.udea.ayds2.dto.store;
+package co.edu.udea.ayds2.collection.store;
 
-import co.edu.udea.ayds2.dto.user.UserVisualizationDto;
+import co.edu.udea.ayds2.collection.user.UserVisualization;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-public class StoreVisualizationDto {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder(toBuilder = true)
+@Document
+public class StoreVisualization {
 
+    @Id
     private String storeId;
-    private List<UserVisualizationDto> userVisualizationList;
+    private List<UserVisualization> userVisualizationList;
 
 }
