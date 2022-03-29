@@ -23,7 +23,7 @@ public enum EnumColombianStates {
     GUAINIA(16,"Guainía", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296501/garage-sale-store/assets/user-profile/state-flags/guainia_wiansw.png"),
     GUAVIARE(17,"Guaviare", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296501/garage-sale-store/assets/user-profile/state-flags/guaviare_p8scbq.png"),
     HUILA(18,"Huila", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296501/garage-sale-store/assets/user-profile/state-flags/huila_drgcyo.png"),
-    LA_GUAJITA(19,"La Guajira", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296501/garage-sale-store/assets/user-profile/state-flags/la_guajira_rdedqm.png"),
+    LA_GUAJIRA(19,"La Guajira", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296501/garage-sale-store/assets/user-profile/state-flags/la_guajira_rdedqm.png"),
     MAGDALENA(20,"Magdalena", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296502/garage-sale-store/assets/user-profile/state-flags/magdalena_vtfhsr.png"),
     META(21,"Meta", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296502/garage-sale-store/assets/user-profile/state-flags/meta_t3rrvg.png"),
     NARINIO(22,"Nariño", "https://res.cloudinary.com/dahwtwzdl/image/upload/v1644296506/garage-sale-store/assets/user-profile/state-flags/nari%C3%B1o_pflpzo.png"),

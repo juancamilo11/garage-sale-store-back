@@ -2,9 +2,13 @@ package co.edu.udea.ayds2.services;
 
 import co.edu.udea.ayds2.collection.user.User;
 import co.edu.udea.ayds2.dto.helpers.enums.EnumColombianStates;
+import co.edu.udea.ayds2.dto.store.StoreVisualizationDto;
 import co.edu.udea.ayds2.dto.user.BasicUserInfo;
 import co.edu.udea.ayds2.dto.user.UserDto;
+import co.edu.udea.ayds2.dto.user.UserVisualizationDto;
+import co.edu.udea.ayds2.mapper.interfaces.StoreVisualizationMapper;
 import co.edu.udea.ayds2.mapper.interfaces.UserMapper;
+import co.edu.udea.ayds2.repository.StoreVisualizationRepository;
 import co.edu.udea.ayds2.repository.UserRepository;
 import co.edu.udea.ayds2.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,11 +29,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final StoreVisualizationRepository storeVisualizationRepository;
+    private final StoreVisualizationMapper storeVisualizationMapper;
 
     @Override
     public UserDto updateUserInfo(UserDto userDto) {
         return this.userMapper.mapFromEntityToDto()
-                .apply(this.userRepository.save(this.userMapper.mapFromDtoToEntity().apply(userDto)));
+                .apply(this.userRepository
+                        .save(this.userMapper.mapFromDtoToEntity().apply(userDto)));
     }
 
     @Override
@@ -72,4 +80,16 @@ public class UserServiceImpl implements UserService {
             return this.userMapper.mapFromEntityToDto().apply(userOptional.get());
         }
     }
+
+    @Override
+    public List<UserVisualizationDto> getViewsByStoreId(String storeId) {
+        return this.storeVisualizationRepository
+                .findById(storeId)
+                .map(storeVisualization -> this.storeVisualizationMapper
+                        .mapFromEntityToDto()
+                        .apply(storeVisualization))
+                .map(StoreVisualizationDto::getUserVisualizationList)
+                .orElse(Collections.emptyList());
+    }
+
 }

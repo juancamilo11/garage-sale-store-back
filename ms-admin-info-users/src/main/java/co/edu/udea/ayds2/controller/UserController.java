@@ -2,8 +2,10 @@ package co.edu.udea.ayds2.controller;
 
 import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
 import co.edu.udea.ayds2.dto.helpers.response.EnumResponseStatus;
+import co.edu.udea.ayds2.dto.store.StoreVisualizationDto;
 import co.edu.udea.ayds2.dto.user.BasicUserInfo;
 import co.edu.udea.ayds2.dto.user.UserDto;
+import co.edu.udea.ayds2.dto.user.UserVisualizationDto;
 import co.edu.udea.ayds2.monitoring.TraceabilityEmitter;
 import co.edu.udea.ayds2.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,7 @@ public class UserController {
     private final TraceabilityEmitter traceabilityEmitter;
     private final UserService userService;
 
-    @PostMapping("/put/user")
+    @PutMapping("/put/user")
     public ResponseEntity<UserDto> updateUserInfo(@RequestBody UserDto userDto) {
 
         UserDto savedUser = this.userService.updateUserInfo(userDto);
@@ -70,6 +72,20 @@ public class UserController {
 //                        "[GET - Error] Get Users By IDs");
 
         return getResponseEntity(!userDtoList.isEmpty(), userDtoList, Collections.emptyList());
+    }
+
+
+
+    @GetMapping("/get/store/views/users/{storeId}")
+    public ResponseEntity<List<UserVisualizationDto>> getViewersInfo(@PathVariable String storeId) {
+
+        List<UserVisualizationDto> userVisualizationList = this.userService.getViewsByStoreId(storeId);
+
+//        emitAppServiceResponse(!userDtoList.isEmpty() ? EnumResponseStatus.OK : EnumResponseStatus.ERROR,
+//                !userDtoList.isEmpty() ? "[GET - Success] Get Users By IDs, found " +  userDtoList.size():
+//                        "[GET - Error] Get Users By IDs");
+
+        return getResponseEntity(!userVisualizationList.isEmpty(), userVisualizationList, Collections.emptyList());
     }
 
     private void emitAppServiceResponse(EnumResponseStatus responseStatus, String additionalInfo) {
