@@ -1,6 +1,7 @@
 package co.edu.udea.ayds2.dto.store;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,37 +11,25 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class PurchaseOrderDto {
 
-    @JsonProperty("id")
-    private String id;
-
-    @JsonProperty("date")
+    @JsonProperty("orderId")
+    private String orderId;
+    @JsonProperty("storeId")
+    private String storeId;
+    @JsonProperty("productId")
+    private String productId;
+    @JsonProperty("sellerId")
+    private String sellerId;
+    @JsonProperty("quantity")
+    private Integer quantity;
+    @JsonProperty("customerId")
+    private String customerId;
     @DateTimeFormat(style = "yyyy-MM-dd")
-    private LocalDate date;
+    @JsonProperty("dateCreated")
+    private LocalDate dateCreated;
 
-    @JsonProperty("purchasedItemList")
-    private List<PurchasedItemDto> purchasedItemList;
-
-    @JsonProperty("purchaseTestimonial")
-    private PurchaseTestimonialDto purchaseTestimonial;
-
-    @JsonProperty("totalPrice")
-    private double totalPrice;
-
-    @Builder(toBuilder = true)
-    public PurchaseOrderDto(String id, LocalDate date, List<PurchasedItemDto> purchasedItemList, PurchaseTestimonialDto purchaseTestimonial) {
-        this.id = id;
-        this.date = date;
-        this.purchasedItemList = purchasedItemList;
-        this.purchaseTestimonial = purchaseTestimonial;
-        this.totalPrice = this.calculateTotalPrice();
-    }
-
-    private double calculateTotalPrice() {
-        return this.purchasedItemList.stream()
-                .mapToDouble(PurchasedItemDto::getPrice)
-                .sum();
-    }
 }

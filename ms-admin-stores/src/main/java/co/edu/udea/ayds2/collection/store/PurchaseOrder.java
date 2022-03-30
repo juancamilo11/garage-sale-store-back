@@ -1,34 +1,30 @@
 package co.edu.udea.ayds2.collection.store;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
+@Document
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class PurchaseOrder {
 
-    private String id;
-    private LocalDate date;
-    private List<PurchasedItem> purchasedItemList;
-    private PurchaseTestimonial purchaseTestimonial;
-    private double totalPrice;
+    @Id
+    private String orderId;
+    private String storeId;
+    private String productId;
+    private String sellerId;
+    private Integer quantity;
+    private String customerId;
+    @DateTimeFormat(style = "yyyy-MM-dd")
+    private LocalDate dateCreated;
 
-    @Builder(toBuilder = true)
-    public PurchaseOrder(String id, LocalDate date, List<PurchasedItem> purchasedItemList, PurchaseTestimonial purchaseTestimonial) {
-        this.id = id;
-        this.date = date;
-        this.purchasedItemList = purchasedItemList;
-        this.purchaseTestimonial = purchaseTestimonial;
-        this.totalPrice = this.calculateTotalPrice();
-    }
-
-    private double calculateTotalPrice() {
-        return this.purchasedItemList.stream()
-                .mapToDouble(PurchasedItem::getPrice)
-                .sum();
-    }
 }

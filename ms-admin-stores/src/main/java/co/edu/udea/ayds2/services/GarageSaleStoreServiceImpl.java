@@ -1,16 +1,20 @@
 package co.edu.udea.ayds2.services;
 
 import co.edu.udea.ayds2.collection.store.GarageSaleStore;
+import co.edu.udea.ayds2.collection.store.PurchaseOrder;
 import co.edu.udea.ayds2.collection.store.StoreVisualization;
 import co.edu.udea.ayds2.collection.store.product.Product;
 import co.edu.udea.ayds2.collection.store.product.ProductCategory;
 import co.edu.udea.ayds2.collection.store.product.ProductQuestion;
 import co.edu.udea.ayds2.collection.user.UserVisualization;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
+import co.edu.udea.ayds2.dto.store.PurchaseOrderDto;
 import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
+import co.edu.udea.ayds2.mapper.interfaces.PurchaseOrderMapper;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromDtoToEntity;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromEntityToDto;
 import co.edu.udea.ayds2.repository.GarageSaleStoreRepository;
+import co.edu.udea.ayds2.repository.PurchaseOrderRepository;
 import co.edu.udea.ayds2.repository.StoreVisualizationRepository;
 import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +38,8 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
     private final StoreMapperFromDtoToEntity storeMapperFromDtoToEntity;
     private final GarageSaleStoreRepository garageSaleStoreRepository;
     private final StoreVisualizationRepository storeVisualizationRepository;
+    private final PurchaseOrderRepository purchaseOrderRepository;
+    private final PurchaseOrderMapper purchaseOrderMapper;
 
     @Override
     public boolean createStore(GarageSaleStoreDto garageSaleStoreDto) {
@@ -72,6 +78,39 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
                     .build());
             return Optional.of(Boolean.TRUE);
         }).orElse(Boolean.FALSE);
+    }
+
+    @Override
+    public PurchaseOrderDto postPurchaseOrder(PurchaseOrderDto purchaseOrderDto) {
+        return this.purchaseOrderMapper.mapFromEntityToDto()
+                .apply(this.purchaseOrderRepository
+                        .save(this.purchaseOrderMapper.mapFromDtoToEntity()
+                                .apply(purchaseOrderDto)));
+    }
+
+    @Override
+    public List<PurchaseOrderDto> getPurchaseOrder(String type, String id) {
+        List<PurchaseOrder> purchaseOrderList = new ArrayList<>();
+        if(type.equalsIgnoreCase("BUY")) {
+            purchaseOrderList = this.purchaseOrderRepository.findAllByCustomerId(id);
+        }
+        if(type.equalsIgnoreCase("SELL")) {
+            purchaseOrderList = this.purchaseOrderRepository.findAllBySellerId(id);
+        }
+        return purchaseOrderList.stream()
+                .map(purchaseOrder -> this.purchaseOrderMapper
+                        .mapFromEntityToDto()
+                        .apply(purchaseOrder))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public GarageSaleStoreDto getStoreById(String id) {
+        Optional<GarageSaleStore> garageSaleStoreOptional = this.garageSaleStoreRepository.findById(id);
+        return garageSaleStoreOptional.map(garageSaleStore -> this.storeMapperFromEntityToDto
+                    .mapFromEntityToDto()
+                    .apply(garageSaleStore))
+                .orElseThrow();
     }
 
     private void addTheNewUserVisualization(String userId, StoreVisualization storeVisualization) {

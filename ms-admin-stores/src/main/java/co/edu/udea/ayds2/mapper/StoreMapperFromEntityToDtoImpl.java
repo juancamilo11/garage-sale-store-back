@@ -34,20 +34,7 @@ public class StoreMapperFromEntityToDtoImpl implements StoreMapperFromEntityToDt
                 .sellerId(garageSaleStore.getSellerId())
                 .productCategoryList(mapProductCategoryList(garageSaleStore.getProductCategoryList()))
                 .purchaseTestimonialList(mapPurchaseTestimonialList(garageSaleStore.getPurchaseTestimonialList()))
-                .purchaseOrderList(mapPurchaseOrderList(garageSaleStore.getPurchaseOrderList()))
                 .build();
-    }
-
-    private List<PurchaseOrderDto> mapPurchaseOrderList(List<PurchaseOrder> purchaseOrderList) {
-        return purchaseOrderList
-                .stream()
-                .map(purchaseOrder -> PurchaseOrderDto.builder()
-                        .id(purchaseOrder.getId())
-                        .date(purchaseOrder.getDate())
-                        .purchaseTestimonial(mapPurchaseTestimonial(purchaseOrder.getPurchaseTestimonial()))
-                        .purchasedItemList(mapPurchasedItemsList(purchaseOrder.getPurchasedItemList()))
-                        .build())
-                .collect(Collectors.toList());
     }
 
     private PurchaseTestimonialDto mapPurchaseTestimonial(PurchaseTestimonial purchaseTestimonial) {

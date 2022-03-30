@@ -4,6 +4,7 @@ import co.edu.udea.ayds2.collection.store.GarageSaleStore;
 import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
 import co.edu.udea.ayds2.dto.helpers.response.EnumResponseStatus;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
+import co.edu.udea.ayds2.dto.store.PurchaseOrderDto;
 import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
 import co.edu.udea.ayds2.monitoring.TraceabilityEmitter;
 import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
@@ -108,6 +109,42 @@ public class GarageSaleStoreController {
         return getResponseEntity(result,"Success", "Error");
     }
 
+    @PostMapping("/post/purchase-order")
+    public ResponseEntity<String> registerPurchaseOrder(@RequestBody PurchaseOrderDto purchaseOrderDto) {
+
+        PurchaseOrderDto result = this.garageSaleStoreService.postPurchaseOrder(purchaseOrderDto);
+
+//        emitAppServiceResponse(result ? EnumResponseStatus.OK : EnumResponseStatus.ERROR,
+//                result ? "[GET - Success] Post new Question, value: " + productQuestionDto.getQuestion():
+//                        "[GET - Error] All GarageSaleStores");
+
+        return getResponseEntity(result.getOrderId() != null,"Success", "Error");
+    }
+
+    @GetMapping("/get/purchase-order/{type}/{id}")
+    public ResponseEntity<List<PurchaseOrderDto>> getAllPurchaseOrderByType(@PathVariable String type, @PathVariable String id) {
+
+        List<PurchaseOrderDto> purchaseOrderList = this.garageSaleStoreService.getPurchaseOrder(type, id);
+
+//        emitAppServiceResponse(result ? EnumResponseStatus.OK : EnumResponseStatus.ERROR,
+//                result ? "[GET - Success] Post new Question, value: " + productQuestionDto.getQuestion():
+//                        "[GET - Error] All GarageSaleStores");
+
+        return getResponseEntity(purchaseOrderList != null,purchaseOrderList, null);
+    }
+
+    @GetMapping("/get/store/{id}")
+    public ResponseEntity<GarageSaleStoreDto> getStoreById(@PathVariable String id) {
+
+        GarageSaleStoreDto garageSaleStoreDto = this.garageSaleStoreService.getStoreById(id);
+
+//        emitAppServiceResponse(result ? EnumResponseStatus.OK : EnumResponseStatus.ERROR,
+//                result ? "[GET - Success] Post new Question, value: " + productQuestionDto.getQuestion():
+//                        "[GET - Error] All GarageSaleStores");
+
+        return getResponseEntity(garageSaleStoreDto.getId() != null, garageSaleStoreDto, null);
+    }
+
     private void emitAppServiceResponse(EnumResponseStatus responseStatus, String additionalInfo) {
         AppServerResponse appServerResponse = new AppServerResponse(responseStatus, LocalDate.now(), additionalInfo);
         this.traceabilityEmitter.emitTraceability(appServerResponse);
@@ -118,6 +155,8 @@ public class GarageSaleStoreController {
                 new ResponseEntity<>(value, HttpStatus.OK) :
                 new ResponseEntity<>(errorValue, HttpStatus.BAD_REQUEST);
     }
+
+
 
 
 
