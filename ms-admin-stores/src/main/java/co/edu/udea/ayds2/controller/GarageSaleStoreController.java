@@ -121,6 +121,33 @@ public class GarageSaleStoreController {
         return getResponseEntity(result.getOrderId() != null,"Success", "Error");
     }
 
+    @PostMapping("/post/accept/order/{orderId}")
+    public ResponseEntity<String> approveOrderById(@PathVariable String orderId) {
+        //Obtener la orden de compra y enviarla a una cola de Rabbit
+        boolean result = this.garageSaleStoreService.approveOrderById(orderId);
+
+//        emitAppServiceResponse(result ? EnumResponseStatus.OK : EnumResponseStatus.ERROR,
+//                result ? "[GET - Success] Post new Question, value: " + productQuestionDto.getQuestion():
+//                        "[GET - Error] All GarageSaleStores");
+
+        return getResponseEntity(result, "Success", "Error");
+    }
+
+    @PostMapping("/post/decline/order/{orderId}")
+    public ResponseEntity<String> declineOrderById(@PathVariable String orderId) {
+        //Obtener la orden de compra y enviarla a una cola de Rabbit
+        boolean result = this.garageSaleStoreService.declineOrderById(orderId);
+
+//        emitAppServiceResponse(result ? EnumResponseStatus.OK : EnumResponseStatus.ERROR,
+//                result ? "[GET - Success] Post new Question, value: " + productQuestionDto.getQuestion():
+//                        "[GET - Error] All GarageSaleStores");
+
+        return getResponseEntity(result, "Success", "Error");
+    }
+
+
+
+
     @GetMapping("/get/purchase-order/{type}/{id}")
     public ResponseEntity<List<PurchaseOrderDto>> getAllPurchaseOrderByType(@PathVariable String type, @PathVariable String id) {
 

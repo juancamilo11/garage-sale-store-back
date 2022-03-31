@@ -25,4 +25,8 @@ public interface GarageSaleStoreService {
     List<PurchaseOrderDto> getPurchaseOrder(String type, String id);
 
     GarageSaleStoreDto getStoreById(String id);
+
+    boolean approveOrderById(String orderId);
+
+    boolean declineOrderById(String orderId);
 }
