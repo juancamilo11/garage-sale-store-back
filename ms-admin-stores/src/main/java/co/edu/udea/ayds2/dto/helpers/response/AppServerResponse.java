@@ -7,17 +7,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @Data
-@RequiredArgsConstructor
-/**
- * Class for requests traceability
-* */
+@NoArgsConstructor
 public class AppServerResponse {
 
     @Value("${microservice.name}")
     private String microserviceName;
-    private final EnumResponseStatus status;
+    private EnumResponseStatus status;
     @DateTimeFormat(style = "yyyy-MM-dd")
-    private final LocalDate currentDate;
-    private final String detailInfo;
+    private LocalDate currentDate;
+    private String detailInfo;
 
 }
