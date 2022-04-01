@@ -20,12 +20,13 @@ import java.util.List;
 public class GarageSaleStoreServiceProxy implements GarageSaleStoreService {
 
     private final GarageSaleStoreService garageSaleStoreService;
-    private final TraceabilityEmitter traceabilityEmitter = TraceabilityEmitterImpl.getInstance();
+    private final TraceabilityEmitter traceabilityEmitter;
     private final AppServerResponse appServerResponse;
 
     @Autowired
-    public GarageSaleStoreServiceProxy(@Qualifier("realGarageSaleStoreServiceImpl") GarageSaleStoreService garageSaleStoreService) {
+    public GarageSaleStoreServiceProxy(@Qualifier("realGarageSaleStoreServiceImpl") GarageSaleStoreService garageSaleStoreService, TraceabilityEmitter traceabilityEmitter) {
         this.garageSaleStoreService = garageSaleStoreService;
+        this.traceabilityEmitter = traceabilityEmitter;
         this.appServerResponse = new AppServerResponse();
     }
 

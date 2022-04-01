@@ -17,11 +17,12 @@ import java.util.List;
 public class PurchaseOrderServiceProxy implements PurchaseOrderService {
 
     private final PurchaseOrderService purchaseOrderService;
-    private final TraceabilityEmitter traceabilityEmitter = TraceabilityEmitterImpl.getInstance();
+    private final TraceabilityEmitter traceabilityEmitter;
     private final AppServerResponse appServerResponse;
 
-    public PurchaseOrderServiceProxy(@Qualifier("realPurchaseOrderServiceImpl") PurchaseOrderService purchaseOrderService) {
+    public PurchaseOrderServiceProxy(@Qualifier("realPurchaseOrderServiceImpl") PurchaseOrderService purchaseOrderService, TraceabilityEmitter traceabilityEmitter) {
         this.purchaseOrderService = purchaseOrderService;
+        this.traceabilityEmitter = traceabilityEmitter;
         this.appServerResponse = new AppServerResponse();
     }
 
