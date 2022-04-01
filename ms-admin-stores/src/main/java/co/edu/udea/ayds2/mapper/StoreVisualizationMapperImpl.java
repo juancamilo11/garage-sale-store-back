@@ -11,6 +11,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class StoreVisualizationMapperImpl implements StoreVisualizationMapper {
+
+    private static StoreVisualizationMapper instance;
+
+    private StoreVisualizationMapperImpl(){}
+
+    public static synchronized StoreVisualizationMapper getInstance(){
+        if(instance == null){
+            instance = new StoreVisualizationMapperImpl();
+        }
+        return instance;
+    }
+
     @Override
     public Function<StoreVisualization, StoreVisualizationDto> mapFromEntityToDto() {
         return  storeVisualization ->

@@ -1,23 +1,21 @@
 package co.edu.udea.ayds2.services;
 
 import co.edu.udea.ayds2.collection.store.GarageSaleStore;
-import co.edu.udea.ayds2.collection.store.PurchaseOrder;
 import co.edu.udea.ayds2.collection.store.StoreVisualization;
 import co.edu.udea.ayds2.collection.store.product.Product;
 import co.edu.udea.ayds2.collection.store.product.ProductCategory;
 import co.edu.udea.ayds2.collection.store.product.ProductQuestion;
 import co.edu.udea.ayds2.collection.user.UserVisualization;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
-import co.edu.udea.ayds2.dto.store.PurchaseOrderDto;
 import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
-import co.edu.udea.ayds2.mapper.interfaces.PurchaseOrderMapper;
+import co.edu.udea.ayds2.mapper.StoreMapperFromDtoToEntityImpl;
+import co.edu.udea.ayds2.mapper.StoreMapperFromEntityToDtoImpl;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromDtoToEntity;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromEntityToDto;
 import co.edu.udea.ayds2.repository.GarageSaleStoreRepository;
-import co.edu.udea.ayds2.repository.PurchaseOrderRepository;
 import co.edu.udea.ayds2.repository.StoreVisualizationRepository;
 import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -31,7 +29,6 @@ import java.util.stream.Collectors;
 
 @Service("realGarageSaleStoreServiceImpl")
 @Validated
-@RequiredArgsConstructor
 public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
 
     private final StoreMapperFromEntityToDto storeMapperFromEntityToDto;
@@ -39,6 +36,14 @@ public class GarageSaleStoreServiceImpl implements GarageSaleStoreService {
     private final GarageSaleStoreRepository garageSaleStoreRepository;
     private final StoreVisualizationRepository storeVisualizationRepository;
 
+    @Autowired
+    public GarageSaleStoreServiceImpl(GarageSaleStoreRepository garageSaleStoreRepository,
+                                      StoreVisualizationRepository storeVisualizationRepository) {
+        this.garageSaleStoreRepository = garageSaleStoreRepository;
+        this.storeVisualizationRepository = storeVisualizationRepository;
+        this.storeMapperFromEntityToDto = StoreMapperFromEntityToDtoImpl.getInstance();
+        this.storeMapperFromDtoToEntity = StoreMapperFromDtoToEntityImpl.getInstance();
+    }
 
     @Override
     public boolean createStore(GarageSaleStoreDto garageSaleStoreDto) {

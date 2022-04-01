@@ -2,19 +2,13 @@ package co.edu.udea.ayds2.controller;
 
 import co.edu.udea.ayds2.collection.store.GarageSaleStore;
 import co.edu.udea.ayds2.controller.interfaces.ControllerOperation;
-import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
-import co.edu.udea.ayds2.dto.helpers.response.EnumResponseStatus;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
-import co.edu.udea.ayds2.dto.store.PurchaseOrderDto;
 import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
-import co.edu.udea.ayds2.monitoring.TraceabilityEmitter;
 import co.edu.udea.ayds2.proxy.GarageSaleStoreServiceProxy;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 

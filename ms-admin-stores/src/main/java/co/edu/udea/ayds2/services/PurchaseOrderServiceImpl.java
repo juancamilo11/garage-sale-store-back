@@ -5,6 +5,7 @@ import co.edu.udea.ayds2.collection.store.PurchaseOrder;
 import co.edu.udea.ayds2.collection.store.product.Product;
 import co.edu.udea.ayds2.collection.store.product.ProductCategory;
 import co.edu.udea.ayds2.dto.store.PurchaseOrderDto;
+import co.edu.udea.ayds2.mapper.PurchaseOrderMapperImpl;
 import co.edu.udea.ayds2.mapper.interfaces.PurchaseOrderMapper;
 import co.edu.udea.ayds2.repository.GarageSaleStoreRepository;
 import co.edu.udea.ayds2.repository.PurchaseOrderRepository;
@@ -20,12 +21,19 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service("realPurchaseOrderServiceImpl")
-@RequiredArgsConstructor
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     private final GarageSaleStoreRepository garageSaleStoreRepository;
     private final PurchaseOrderRepository purchaseOrderRepository;
     private final PurchaseOrderMapper purchaseOrderMapper;
+
+    @Autowired
+    public PurchaseOrderServiceImpl(GarageSaleStoreRepository garageSaleStoreRepository,
+                                    PurchaseOrderRepository purchaseOrderRepository) {
+        this.garageSaleStoreRepository = garageSaleStoreRepository;
+        this.purchaseOrderRepository = purchaseOrderRepository;
+        this. purchaseOrderMapper = PurchaseOrderMapperImpl.getInstance();
+    }
 
     @Override
     public PurchaseOrderDto postPurchaseOrder(PurchaseOrderDto purchaseOrderDto) {

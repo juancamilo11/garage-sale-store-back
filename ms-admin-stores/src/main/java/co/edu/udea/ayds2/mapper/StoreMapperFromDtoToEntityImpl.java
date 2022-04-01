@@ -13,15 +13,24 @@ import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
 import co.edu.udea.ayds2.dto.user.UserContactDto;
 import co.edu.udea.ayds2.dto.user.UserDto;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromDtoToEntity;
-import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
 public class StoreMapperFromDtoToEntityImpl implements StoreMapperFromDtoToEntity {
+
+    private static StoreMapperFromDtoToEntity instance;
+
+    private StoreMapperFromDtoToEntityImpl(){}
+
+    public static synchronized StoreMapperFromDtoToEntity getInstance(){
+        if(instance == null){
+            instance = new StoreMapperFromDtoToEntityImpl();
+        }
+        return instance;
+    }
 
     @Override
     public Function<GarageSaleStoreDto, GarageSaleStore> mapFromDtoToEntity() {
