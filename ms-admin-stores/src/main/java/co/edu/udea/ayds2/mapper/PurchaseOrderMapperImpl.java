@@ -3,14 +3,21 @@ package co.edu.udea.ayds2.mapper;
 import co.edu.udea.ayds2.collection.store.PurchaseOrder;
 import co.edu.udea.ayds2.dto.store.PurchaseOrderDto;
 import co.edu.udea.ayds2.mapper.interfaces.PurchaseOrderMapper;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.function.Function;
 
-@Component
 public class PurchaseOrderMapperImpl implements PurchaseOrderMapper {
+
+    private static PurchaseOrderMapper instance;
+
+    private PurchaseOrderMapperImpl(){}
+
+    public static synchronized PurchaseOrderMapper getInstance(){
+        if(instance == null){
+            instance = new PurchaseOrderMapperImpl();
+        }
+        return instance;
+    }
 
     @Override
     public Function<PurchaseOrder, PurchaseOrderDto> mapFromEntityToDto() {

@@ -1,6 +1,5 @@
 package co.edu.udea.ayds2.dto.store.product;
 
-import co.edu.udea.ayds2.dto.user.UserDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
