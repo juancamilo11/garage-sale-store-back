@@ -10,7 +10,6 @@ import co.edu.udea.ayds2.dto.store.*;
 import co.edu.udea.ayds2.dto.store.product.ProductCategoryDto;
 import co.edu.udea.ayds2.dto.store.product.ProductDto;
 import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
-import co.edu.udea.ayds2.dto.user.UserContactDto;
 import co.edu.udea.ayds2.dto.user.UserDto;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromDtoToEntity;
 
@@ -42,37 +41,7 @@ public class StoreMapperFromDtoToEntityImpl implements StoreMapperFromDtoToEntit
                 .storeVisualDescription(mapStoreVisualDescription(garageSaleStore.getStoreVisualDescription()))
                 .sellerId(garageSaleStore.getSellerId())
                 .productCategoryList(mapProductCategoryList(garageSaleStore.getProductCategoryList()))
-                .purchaseTestimonialList(mapPurchaseTestimonialList(garageSaleStore.getPurchaseTestimonialList()))
                 .build();
-    }
-
-    private PurchaseTestimonial mapPurchaseTestimonial(PurchaseTestimonialDto purchaseTestimonialDto) {
-        return PurchaseTestimonial.builder()
-                .title(purchaseTestimonialDto.getTitle())
-                .purchaseTestimonial(purchaseTestimonialDto.getPurchaseTestimonial())
-                .date(purchaseTestimonialDto.getDate())
-                .grade(purchaseTestimonialDto.getGrade())
-                .user(mapSellerInformation(purchaseTestimonialDto.getUser()))
-                .build();
-    }
-
-    private List<PurchasedItem> mapPurchasedItemsList(List<PurchasedItemDto> purchasedItemDtoList) {
-        return purchasedItemDtoList.stream()
-                .map(purchasedItemDto -> PurchasedItem.builder()
-                        .price(purchasedItemDto.getPrice())
-                        .quantity(purchasedItemDto.getQuantity())
-                        .product(mapProductList(Collections.singletonList(purchasedItemDto.getProduct())).get(0))
-                        .build()).collect(Collectors.toList());
-    }
-    private List<PurchaseTestimonial> mapPurchaseTestimonialList(List<PurchaseTestimonialDto> purchaseTestimonialDtoList) {
-        return purchaseTestimonialDtoList.stream()
-                .map(purchaseTestimonialDto -> PurchaseTestimonial.builder()
-                        .title(purchaseTestimonialDto.getTitle())
-                        .date(purchaseTestimonialDto.getDate())
-                        .grade(purchaseTestimonialDto.getGrade())
-                        .user(mapSellerInformation(purchaseTestimonialDto.getUser()))
-                        .build())
-                .collect(Collectors.toList());
     }
 
     private List<ProductCategory> mapProductCategoryList(List<ProductCategoryDto> productCategoryDtoList) {
@@ -120,30 +89,6 @@ public class StoreMapperFromDtoToEntityImpl implements StoreMapperFromDtoToEntit
                 .question(productQuestionDto.getQuestion())
                 .response(productQuestionDto.getResponse())
                 .customerId(productQuestionDto.getCustomerId())
-                .build();
-    }
-
-    private User mapSellerInformation(UserDto userDto) {
-        return User.builder()
-                .id(userDto.getId())
-                .name(userDto.getId())
-                .occupation(userDto.getOccupation())
-                .dateOfBirth(userDto.getDateOfBirth())
-                .registerDate(userDto.getRegisterDate())
-                .creationTime(userDto.getCreationTime())
-                .lastSignInTime(userDto.getLastSignInTime())
-                .registerDate(userDto.getRegisterDate())
-                .userContact(mapUserContact(userDto.getUserContact()))
-                .build();
-    }
-
-    private UserContact mapUserContact(UserContactDto userContactDto) {
-        return UserContact.builder()
-                .email(userContactDto.getEmail())
-                .address(userContactDto.getAddress())
-                .colombianState(userContactDto.getColombianState())
-                .phoneNumber(userContactDto.getPhoneNumber())
-                .postalCode(userContactDto.getPostalCode())
                 .build();
     }
 

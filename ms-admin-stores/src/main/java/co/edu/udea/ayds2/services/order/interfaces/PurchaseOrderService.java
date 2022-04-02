@@ -1,4 +1,4 @@
-package co.edu.udea.ayds2.services.interfaces;
+package co.edu.udea.ayds2.services.order.interfaces;
 
 import co.edu.udea.ayds2.dto.store.PurchaseOrderDto;
 
@@ -10,4 +10,6 @@ public interface PurchaseOrderService {
 
     boolean declineOrderById(String orderId);
     List<PurchaseOrderDto> getPurchaseOrdersByTypeAndId(String type, String id);
+
+    PurchaseOrderDto getPurchaseOrderById(String orderId);
 }

@@ -1,4 +1,4 @@
-package co.edu.udea.ayds2.services;
+package co.edu.udea.ayds2.services.store;
 
 import co.edu.udea.ayds2.collection.store.GarageSaleStore;
 import co.edu.udea.ayds2.collection.store.StoreVisualization;
@@ -14,7 +14,7 @@ import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromDtoToEntity;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromEntityToDto;
 import co.edu.udea.ayds2.repository.GarageSaleStoreRepository;
 import co.edu.udea.ayds2.repository.StoreVisualizationRepository;
-import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
+import co.edu.udea.ayds2.services.store.interfaces.GarageSaleStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;

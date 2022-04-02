@@ -1,26 +1,30 @@
-package co.edu.udea.ayds2.services;
+package co.edu.udea.ayds2.services.order;
 
 import co.edu.udea.ayds2.collection.store.GarageSaleStore;
 import co.edu.udea.ayds2.collection.store.PurchaseOrder;
 import co.edu.udea.ayds2.collection.store.product.Product;
 import co.edu.udea.ayds2.collection.store.product.ProductCategory;
 import co.edu.udea.ayds2.dto.store.PurchaseOrderDto;
+import co.edu.udea.ayds2.exceptions.BusinessException;
 import co.edu.udea.ayds2.mapper.PurchaseOrderMapperImpl;
 import co.edu.udea.ayds2.mapper.interfaces.PurchaseOrderMapper;
 import co.edu.udea.ayds2.repository.GarageSaleStoreRepository;
 import co.edu.udea.ayds2.repository.PurchaseOrderRepository;
-import co.edu.udea.ayds2.services.interfaces.PurchaseOrderService;
-import lombok.RequiredArgsConstructor;
+import co.edu.udea.ayds2.services.order.interfaces.PurchaseOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.repository.query.ParameterOutOfBoundsException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Service("realPurchaseOrderServiceImpl")
+@Service
+@Primary
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     private final GarageSaleStoreRepository garageSaleStoreRepository;
@@ -73,7 +77,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         }).orElse(Boolean.FALSE);
     }
     @Override
-    public boolean approveOrderById(String orderId) {
+    public boolean approveOrderById(String orderId)  {
         //Obtener la orden de compra y enviarla a una cola de Rabbit
         Optional<PurchaseOrder> purchaseOrderOptional = this.purchaseOrderRepository.findById(orderId);
         return purchaseOrderOptional.map(purchaseOrder -> {
@@ -99,27 +103,29 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         return productCategory -> {
             if (productCategory.getProductList().stream().anyMatch(product -> product.getId().equalsIgnoreCase(productId))) {
                 return ProductCategory.builder()
-                        .name(productCategory.getName())
-                        .imageUrl(productCategory.getImageUrl())
-                        .productList(productCategory.getProductList()
-                                .stream()
-                                .map(deductUnitsPurchasedFromProduct(productId, quantity))
-                                .collect(Collectors.toList()))
-                        .build();
+                            .name(productCategory.getName())
+                            .imageUrl(productCategory.getImageUrl())
+                            .productList(productCategory.getProductList()
+                                    .stream()
+                                    .map(deductUnitsPurchasedFromProduct(productId, quantity))
+                                    .collect(Collectors.toList()))
+                            .build();
             }
             return productCategory;
         };
     }
 
-    private Function<Product, Product> deductUnitsPurchasedFromProduct(String productId, Integer quantity) {
+    private Function<Product, Product> deductUnitsPurchasedFromProduct(String productId, Integer quantity) throws IllegalArgumentException {
+
         return product -> {
+            if(quantity > product.getQuantity()) return product;
             if (product.getId().equalsIgnoreCase(productId)) {
                 return Product.builder()
                         .id(product.getId())
                         .productName(product.getProductName())
                         .additionalDescription(product.getAdditionalDescription())
                         .price(product.getPrice())
-                        .quantity(Math.abs(product.getQuantity() - quantity)) //Deduct the purchased quantity
+                        .quantity(product.getQuantity() - quantity) //Deduct the purchased quantity
                         .productStatus(product.getProductStatus())
                         .productImageUrlList(product.getProductImageUrlList())
                         .productTagList(product.getProductTagList())
@@ -129,4 +135,13 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             return product;
         };
     }
+
+    @Override
+    public PurchaseOrderDto getPurchaseOrderById(String orderId) {
+        Optional<PurchaseOrder> purchaseOrderOptional = this.purchaseOrderRepository.findById(orderId);
+        return purchaseOrderOptional.map(purchaseOrder -> this.purchaseOrderMapper.mapFromEntityToDto()
+                        .apply(purchaseOrder))
+                .orElseThrow();
+    }
+
 }

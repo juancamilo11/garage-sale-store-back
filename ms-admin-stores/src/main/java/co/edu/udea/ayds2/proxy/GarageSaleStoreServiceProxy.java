@@ -6,7 +6,7 @@ import co.edu.udea.ayds2.dto.helpers.response.EnumResponseStatus;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
 import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
 import co.edu.udea.ayds2.monitoring.TraceabilityEmitter;
-import co.edu.udea.ayds2.services.interfaces.GarageSaleStoreService;
+import co.edu.udea.ayds2.services.store.interfaces.GarageSaleStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

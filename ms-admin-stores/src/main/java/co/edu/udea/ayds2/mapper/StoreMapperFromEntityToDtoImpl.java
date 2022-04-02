@@ -10,7 +10,6 @@ import co.edu.udea.ayds2.dto.store.*;
 import co.edu.udea.ayds2.dto.store.product.ProductCategoryDto;
 import co.edu.udea.ayds2.dto.store.product.ProductDto;
 import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
-import co.edu.udea.ayds2.dto.user.UserContactDto;
 import co.edu.udea.ayds2.dto.user.UserDto;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromEntityToDto;
 
@@ -42,17 +41,6 @@ public class StoreMapperFromEntityToDtoImpl implements StoreMapperFromEntityToDt
                 .storeVisualDescription(mapStoreVisualDescription(garageSaleStore.getStoreVisualDescription()))
                 .sellerId(garageSaleStore.getSellerId())
                 .productCategoryList(mapProductCategoryList(garageSaleStore.getProductCategoryList()))
-                .purchaseTestimonialList(mapPurchaseTestimonialList(garageSaleStore.getPurchaseTestimonialList()))
-                .build();
-    }
-
-    private PurchaseTestimonialDto mapPurchaseTestimonial(PurchaseTestimonial purchaseTestimonial) {
-        return PurchaseTestimonialDto.builder()
-                .title(purchaseTestimonial.getTitle())
-                .purchaseTestimonial(purchaseTestimonial.getPurchaseTestimonial())
-                .date(purchaseTestimonial.getDate())
-                .grade(purchaseTestimonial.getGrade())
-                .user(mapSellerInformation(purchaseTestimonial.getUser()))
                 .build();
     }
 
@@ -63,17 +51,6 @@ public class StoreMapperFromEntityToDtoImpl implements StoreMapperFromEntityToDt
                         .quantity(purchasedItem.getQuantity())
                         .product(mapProductList(Collections.singletonList(purchasedItem.getProduct())).get(0))
                 .build()).collect(Collectors.toList());
-    }
-
-    private List<PurchaseTestimonialDto> mapPurchaseTestimonialList(List<PurchaseTestimonial> purchaseTestimonialList) {
-        return purchaseTestimonialList.stream()
-                .map(purchaseTestimonial -> PurchaseTestimonialDto.builder()
-                        .title(purchaseTestimonial.getTitle())
-                        .date(purchaseTestimonial.getDate())
-                        .grade(purchaseTestimonial.getGrade())
-                        .user(mapSellerInformation(purchaseTestimonial.getUser()))
-                        .build())
-                .collect(Collectors.toList());
     }
 
     private List<ProductCategoryDto> mapProductCategoryList(List<ProductCategory> productCategoryList) {
@@ -109,30 +86,6 @@ public class StoreMapperFromEntityToDtoImpl implements StoreMapperFromEntityToDt
                 .response(productQuestion.getResponse())
                 .customerId(productQuestion.getCustomerId())
                 .build()).collect(Collectors.toList());
-    }
-
-    private UserDto mapSellerInformation(User user) {
-        return UserDto.builder()
-                .id(user.getId())
-                .name(user.getId())
-                .occupation(user.getOccupation())
-                .dateOfBirth(user.getDateOfBirth())
-                .registerDate(user.getRegisterDate())
-                .creationTime(user.getCreationTime())
-                .lastSignInTime(user.getLastSignInTime())
-                .registerDate(user.getRegisterDate())
-                .userContact(mapUserContact(user.getUserContact()))
-                .build();
-    }
-
-    private UserContactDto mapUserContact(UserContact userContact) {
-        return UserContactDto.builder()
-                .email(userContact.getEmail())
-                .address(userContact.getAddress())
-                .colombianState(userContact.getColombianState())
-                .phoneNumber(userContact.getPhoneNumber())
-                .postalCode(userContact.getPostalCode())
-                .build();
     }
 
     private StoreVisualDescriptionDto mapStoreVisualDescription(StoreVisualDescription storeVisualDescription) {

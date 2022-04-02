@@ -1,4 +1,4 @@
-package co.edu.udea.ayds2.services.interfaces;
+package co.edu.udea.ayds2.services.store.interfaces;
 
 import co.edu.udea.ayds2.collection.store.GarageSaleStore;
 import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;

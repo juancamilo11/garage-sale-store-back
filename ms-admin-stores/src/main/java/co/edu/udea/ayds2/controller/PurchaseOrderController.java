@@ -4,6 +4,7 @@ import co.edu.udea.ayds2.controller.interfaces.ControllerOperation;
 import co.edu.udea.ayds2.dto.helpers.enums.EnumServerResponse;
 import co.edu.udea.ayds2.dto.store.PurchaseOrderDto;
 import co.edu.udea.ayds2.proxy.PurchaseOrderServiceProxy;
+import co.edu.udea.ayds2.services.email.EmailSenderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ import java.util.List;
 public class PurchaseOrderController implements ControllerOperation {
 
     private final PurchaseOrderServiceProxy purchaseOrderServiceProxy;
+    private EmailSenderService emailSenderService;
+
 
     @PostMapping("/post/purchase-order")
     public ResponseEntity<String> registerPurchaseOrder(@RequestBody PurchaseOrderDto purchaseOrderDto) {
