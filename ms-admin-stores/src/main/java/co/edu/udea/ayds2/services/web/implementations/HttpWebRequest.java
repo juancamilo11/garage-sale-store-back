@@ -1,7 +1,5 @@
 package co.edu.udea.ayds2.services.web.implementations;
 
-import co.edu.udea.ayds2.collection.user.User;
-import co.edu.udea.ayds2.dto.helpers.enums.EnumColombianStates;
 import co.edu.udea.ayds2.dto.user.UserDto;
 import co.edu.udea.ayds2.services.web.interfaces.WebRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +15,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Service

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -88,7 +88,7 @@ public class GarageSaleStoreServiceProxy implements GarageSaleStoreService {
     }
 
     private void getAppServerResponseOfCurrentProcess(boolean result, String operationDescription) {
-        appServerResponse.setCurrentDate(LocalDate.now());
+        appServerResponse.setCurrentDate(LocalDateTime.now());
         appServerResponse.setStatus(result ? EnumResponseStatus.OK : EnumResponseStatus.ERROR);
         appServerResponse.setDetailInfo(operationDescription);
     }

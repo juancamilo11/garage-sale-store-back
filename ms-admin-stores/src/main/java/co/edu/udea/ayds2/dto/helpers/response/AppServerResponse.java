@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -15,7 +15,7 @@ public class AppServerResponse {
     private String microserviceName;
     private EnumResponseStatus status;
     @DateTimeFormat(style = "yyyy-MM-dd")
-    private LocalDate currentDate;
+    private LocalDateTime currentDate;
     private String detailInfo;
 
 }

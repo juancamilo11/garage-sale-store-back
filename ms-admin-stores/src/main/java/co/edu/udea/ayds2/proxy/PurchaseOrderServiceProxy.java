@@ -1,16 +1,16 @@
 package co.edu.udea.ayds2.proxy;
 
-import co.edu.udea.ayds2.dto.user.UserDto;
-import co.edu.udea.ayds2.services.email.interfaces.MailSender;
 import co.edu.udea.ayds2.dto.helpers.response.AppServerResponse;
 import co.edu.udea.ayds2.dto.helpers.response.EnumResponseStatus;
 import co.edu.udea.ayds2.dto.store.PurchaseOrderDto;
+import co.edu.udea.ayds2.dto.user.UserDto;
 import co.edu.udea.ayds2.monitoring.TraceabilityEmitter;
+import co.edu.udea.ayds2.services.email.EmailSenderService;
 import co.edu.udea.ayds2.services.order.interfaces.PurchaseOrderService;
 import co.edu.udea.ayds2.services.web.interfaces.WebRequest;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,14 +19,14 @@ public class PurchaseOrderServiceProxy implements PurchaseOrderService {
     private final PurchaseOrderService purchaseOrderService;
     private final TraceabilityEmitter traceabilityEmitter;
     private final AppServerResponse appServerResponse;
-    private final MailSender mailSender;
+    private final EmailSenderService emailSenderService;
     private final WebRequest webRequest;
 
-    public PurchaseOrderServiceProxy(PurchaseOrderService purchaseOrderService, TraceabilityEmitter traceabilityEmitter, MailSender mailSender, WebRequest webRequest) {
+    public PurchaseOrderServiceProxy(PurchaseOrderService purchaseOrderService, TraceabilityEmitter traceabilityEmitter, EmailSenderService emailSenderService, WebRequest webRequest) {
         this.purchaseOrderService = purchaseOrderService;
         this.traceabilityEmitter = traceabilityEmitter;
         this.appServerResponse = new AppServerResponse();
-        this.mailSender = mailSender;
+        this.emailSenderService = emailSenderService;
         this.webRequest = webRequest;
     }
 
@@ -75,7 +75,7 @@ public class PurchaseOrderServiceProxy implements PurchaseOrderService {
     }
 
     private void getAppServerResponseOfCurrentProcess(boolean result, String operationDescription) {
-        appServerResponse.setCurrentDate(LocalDate.now());
+        appServerResponse.setCurrentDate(LocalDateTime.now());
         appServerResponse.setStatus(result ? EnumResponseStatus.OK : EnumResponseStatus.ERROR);
         appServerResponse.setDetailInfo(operationDescription);
     }
@@ -83,16 +83,16 @@ public class PurchaseOrderServiceProxy implements PurchaseOrderService {
     private void sendEmailToUsersForNewPurchaseOrder(String orderId, String sellerId, String customerId ) {
         UserDto seller = this.webRequest.requestUserInformationById(sellerId);
         UserDto customer = this.webRequest.requestUserInformationById(customerId);
-        this.mailSender.sendEmailForOrderCreated(orderId, seller, customer);
+        this.emailSenderService.getMailSender().sendEmailForOrderCreated(orderId, seller, customer);
     }
 
     private void sendEmailToCustomerForPurchaseOrderApproved(String orderId, String customerId) {
         UserDto customer = this.webRequest.requestUserInformationById(customerId);
-        this.mailSender.sendEmailForOrderApproved(orderId, customer);
+        this.emailSenderService.getMailSender().sendEmailForOrderApproved(orderId, customer);
     }
 
     private void sendEmailToCustomerForPurchaseOrderDeclined(String orderId, String customerId) {
         UserDto customer = this.webRequest.requestUserInformationById(customerId);
-        this.mailSender.sendEmailForOrderDeclined(orderId, customer);
+        this.emailSenderService.getMailSender().sendEmailForOrderDeclined(orderId, customer);
     }
 }

@@ -10,6 +10,17 @@ import java.util.function.Function;
 @Component
 public class UserMapperImpl implements UserMapper {
 
+    private static UserMapper instance;
+
+    private UserMapperImpl(){}
+
+    public static synchronized UserMapper getInstance(){
+        if(instance == null){
+            instance = new UserMapperImpl();
+        }
+        return instance;
+    }
+
     @Override
     public Function<UserDto, User> mapFromDtoToEntity() {
         return (userDto) -> User.builder()

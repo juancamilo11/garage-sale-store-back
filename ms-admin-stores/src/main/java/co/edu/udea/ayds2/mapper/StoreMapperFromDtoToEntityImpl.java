@@ -1,19 +1,21 @@
 package co.edu.udea.ayds2.mapper;
 
-import co.edu.udea.ayds2.collection.store.*;
+import co.edu.udea.ayds2.collection.store.GarageSaleStore;
+import co.edu.udea.ayds2.collection.store.StoreDescription;
+import co.edu.udea.ayds2.collection.store.StoreExistencePeriod;
+import co.edu.udea.ayds2.collection.store.StoreVisualDescription;
 import co.edu.udea.ayds2.collection.store.product.Product;
 import co.edu.udea.ayds2.collection.store.product.ProductCategory;
 import co.edu.udea.ayds2.collection.store.product.ProductQuestion;
-import co.edu.udea.ayds2.collection.user.User;
-import co.edu.udea.ayds2.collection.user.UserContact;
-import co.edu.udea.ayds2.dto.store.*;
+import co.edu.udea.ayds2.dto.store.GarageSaleStoreDto;
+import co.edu.udea.ayds2.dto.store.StoreDescriptionDto;
+import co.edu.udea.ayds2.dto.store.StoreExistencePeriodDto;
+import co.edu.udea.ayds2.dto.store.StoreVisualDescriptionDto;
 import co.edu.udea.ayds2.dto.store.product.ProductCategoryDto;
 import co.edu.udea.ayds2.dto.store.product.ProductDto;
 import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
-import co.edu.udea.ayds2.dto.user.UserDto;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromDtoToEntity;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;

@@ -4,13 +4,10 @@ import co.edu.udea.ayds2.collection.store.*;
 import co.edu.udea.ayds2.collection.store.product.Product;
 import co.edu.udea.ayds2.collection.store.product.ProductCategory;
 import co.edu.udea.ayds2.collection.store.product.ProductQuestion;
-import co.edu.udea.ayds2.collection.user.User;
-import co.edu.udea.ayds2.collection.user.UserContact;
 import co.edu.udea.ayds2.dto.store.*;
 import co.edu.udea.ayds2.dto.store.product.ProductCategoryDto;
 import co.edu.udea.ayds2.dto.store.product.ProductDto;
 import co.edu.udea.ayds2.dto.store.product.ProductQuestionDto;
-import co.edu.udea.ayds2.dto.user.UserDto;
 import co.edu.udea.ayds2.mapper.interfaces.StoreMapperFromEntityToDto;
 
 import java.util.Collections;

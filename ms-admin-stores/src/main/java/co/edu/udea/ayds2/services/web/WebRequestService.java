@@ -1,6 +1,5 @@
 package co.edu.udea.ayds2.services.web;
 
-import co.edu.udea.ayds2.services.email.interfaces.MailSender;
 import co.edu.udea.ayds2.services.web.interfaces.WebRequest;
 
 public class WebRequestService {
