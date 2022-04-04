@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceProxy implements UserService {
@@ -32,7 +33,7 @@ public class UserServiceProxy implements UserService {
     public UserDto updateUserInfo(UserDto userDto) {
         UserDto userDtoUpdated = this.userService.updateUserInfo(userDto);
         boolean result = userDtoUpdated != null;
-        getAppServerResponseOfCurrentProcess(result, "[User Service] - Se ha actualizado la informción del usuario con email " + userDtoUpdated.getEmail());
+        getAppServerResponseOfCurrentProcess(result, "[ms-admin-info-users] | {updateUserInfo} | Id: " + Objects.requireNonNull(userDtoUpdated).getId());
         sendEmailToUserForInformationUpdated(userDtoUpdated);
         traceabilityEmitter.emitTraceability(appServerResponse);
         return userDtoUpdated;
@@ -42,7 +43,7 @@ public class UserServiceProxy implements UserService {
     public List<UserDto> getUsersByIds(List<String> idList) {
         List<UserDto> usersByIds = this.userService.getUsersByIds(idList);
         boolean result = !usersByIds.isEmpty();
-        getAppServerResponseOfCurrentProcess(result, "[User Service] - Se ha solicitado la lista de usuarios, se encontraron " + usersByIds.size());
+        getAppServerResponseOfCurrentProcess(result, "[ms-admin-info-users] | {getUsersByIds} | Found: " + usersByIds.size());
         traceabilityEmitter.emitTraceability(appServerResponse);
         return usersByIds;
     }
@@ -51,7 +52,7 @@ public class UserServiceProxy implements UserService {
     public UserDto getUserById(String id) {
         UserDto userDto = this.userService.getUserById(id);
         boolean result = userDto != null;
-        this.getAppServerResponseOfCurrentProcess(result, "[User Service] - Se ha solicitado la informción del usuario con email " + userDto.getEmail());
+        this.getAppServerResponseOfCurrentProcess(result, "[ms-admin-info-users] | {getUserById} | Id: " + Objects.requireNonNull(userDto).getId());
         traceabilityEmitter.emitTraceability(appServerResponse);
         return userDto;
     }
@@ -63,7 +64,7 @@ public class UserServiceProxy implements UserService {
         }
         UserDto userDto = this.userService.createUserBasicInfoIfNotExists(basicUserInfo);
         boolean result = userDto != null;
-        this.getAppServerResponseOfCurrentProcess(result, "[User Service] - ha ingresado a la aplicación el usuario con Id " + userDto.getEmail());
+        this.getAppServerResponseOfCurrentProcess(result, "[ms-admin-info-users] | {createUserBasicInfoIfNotExists} | Id: " + Objects.requireNonNull(userDto).getId());
         traceabilityEmitter.emitTraceability(appServerResponse);
         return userDto;
     }
@@ -77,7 +78,7 @@ public class UserServiceProxy implements UserService {
     public List<UserVisualizationDto> getViewsByStoreId(String storeId) {
         List<UserVisualizationDto> viewsByStoreId = this.userService.getViewsByStoreId(storeId);
         boolean result = !viewsByStoreId.isEmpty();
-        getAppServerResponseOfCurrentProcess(result, "[User Service] - Se ha solicitado la lista de usuarios que han visto la tienda con Id " + storeId + ", se encontraron " + viewsByStoreId.size());
+        getAppServerResponseOfCurrentProcess(result, "[ms-admin-info-users] | {getViewsByStoreId} | Store Id: " + storeId + " | Found: " + viewsByStoreId.size());
         traceabilityEmitter.emitTraceability(appServerResponse);
         return viewsByStoreId;
     }

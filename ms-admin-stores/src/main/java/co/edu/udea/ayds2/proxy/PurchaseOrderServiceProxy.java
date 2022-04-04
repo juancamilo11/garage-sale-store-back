@@ -34,7 +34,7 @@ public class PurchaseOrderServiceProxy implements PurchaseOrderService {
     public PurchaseOrderDto postPurchaseOrder(PurchaseOrderDto purchaseOrderDto) {
         PurchaseOrderDto purchaseOrder = this.purchaseOrderService.postPurchaseOrder(purchaseOrderDto);
         boolean result = purchaseOrder != null;
-        getAppServerResponseOfCurrentProcess(result, "[Garage Sale Store Service] - Se ha creado una orden de compra");
+        getAppServerResponseOfCurrentProcess(result, "[ms-admin-stores] | {postPurchaseOrder} | Order Id: " + purchaseOrderDto.getOrderId());
         sendEmailToUsersForNewPurchaseOrder(purchaseOrderDto.getOrderId(), purchaseOrderDto.getSellerId(), purchaseOrderDto.getCustomerId());
         traceabilityEmitter.emitTraceability(appServerResponse);
         return purchaseOrder;
@@ -44,7 +44,7 @@ public class PurchaseOrderServiceProxy implements PurchaseOrderService {
     public boolean approveOrderById(String orderId) throws IllegalArgumentException {
         PurchaseOrderDto purchaseOrderDto = this.purchaseOrderService.getPurchaseOrderById(orderId);
         boolean result = this.purchaseOrderService.approveOrderById(orderId);
-        getAppServerResponseOfCurrentProcess(result, "[Garage Sale Store Service] - Se ha aprobado una orden de compra");
+        getAppServerResponseOfCurrentProcess(result, "[ms-admin-stores] | {approveOrderById} | OrderId: " + orderId);
         sendEmailToCustomerForPurchaseOrderApproved(orderId, purchaseOrderDto.getCustomerId());
         traceabilityEmitter.emitTraceability(appServerResponse);
         return result;
@@ -54,7 +54,7 @@ public class PurchaseOrderServiceProxy implements PurchaseOrderService {
     public boolean declineOrderById(String orderId) {
         PurchaseOrderDto purchaseOrderDto = this.purchaseOrderService.getPurchaseOrderById(orderId);
         boolean result = this.purchaseOrderService.declineOrderById(orderId);
-        getAppServerResponseOfCurrentProcess(result, "[Garage Sale Store Service] - Se ha rechazado una orden de compra");
+        getAppServerResponseOfCurrentProcess(result, "[ms-admin-stores] | {declineOrderById} | Order Id: " + orderId );
         sendEmailToCustomerForPurchaseOrderDeclined(orderId, purchaseOrderDto.getCustomerId());
         traceabilityEmitter.emitTraceability(appServerResponse);
         return result;
@@ -64,7 +64,7 @@ public class PurchaseOrderServiceProxy implements PurchaseOrderService {
     public List<PurchaseOrderDto> getPurchaseOrdersByTypeAndId(String type, String id) {
         List<PurchaseOrderDto> purchaseOrderDtoList = this.purchaseOrderService.getPurchaseOrdersByTypeAndId(type, id);
         boolean result = !purchaseOrderDtoList.isEmpty();
-        getAppServerResponseOfCurrentProcess(result, "[Garage Sale Store Service] - Se han solicitado las ordenes por tipo e Id");
+        getAppServerResponseOfCurrentProcess(result, "[ms-admin-stores] | {getPurchaseOrdersByTypeAndId} | Type: " + type + " | Id: " + id);
         traceabilityEmitter.emitTraceability(appServerResponse);
         return purchaseOrderDtoList;
     }
